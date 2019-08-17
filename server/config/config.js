@@ -4,8 +4,8 @@ const config = {
     DATABASE:process.env.MONGODB_URI
   },
   default:{
-    SECRET: "password@123",
-    DATABASE:"mongodb://localhost:27017/"
+    SECRET: "Ss+%5c_GB/87A{sT",
+    DATABASE:"mongodb://localhost:27017/testdb"
   }
 }
 
