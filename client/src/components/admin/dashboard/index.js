@@ -4,58 +4,11 @@ import { Link } from 'react-router-dom';
 import Header from '../../header/adminHeader';
 import axios from 'axios';
 
-
-
-let data  = [
-    {
-      question:"In the year 1900 in the U.S. what were the most popular first names given to boy and girl babies?",
-      options: [
-        {
-        id:'A',
-        val: "William and Elizabeth"
-      },
-        {
-          id: 'B',
-          val: "Joseph and Catherine"
-        },
-        {
-          id: 'C',
-          val: "John and Mary"
-        },
-        {
-          id: 'D',
-          val: "George and Anne"
-        }
-    ]
-  },
-  {
-    question: "When did the Liberty Bell get its name?",
-    options: [
-      {
-        id: 'A',
-        val: "when it was made, in 1701"
-      },
-      {
-        id: 'B',
-        val: " when it rang on July 4, 1776"
-      },
-      {
-        id: 'C',
-        val: "in the 19th century, when it became a symbol of the abolition of slavery"
-      },
-      {
-        id: 'D',
-        val: "none of the above"
-      }
-    ]
-  }
-];
-
 class AdminDashboard extends Component {
   constructor(){
     super();
     this.state = {
-      questions:data,
+      questions:'',
       selectedQuestion:'',
       selectedOptinon:'',
       isEditing:false,
@@ -68,8 +21,10 @@ class AdminDashboard extends Component {
   getData = async () => {
     const request = await axios.get("http://localhost:3001/api/admin/profile")
       .then(res => res.data)
-    
-    console.log(request)
+
+    this.setState({
+      questions:request
+    })
 
   }
   render() {

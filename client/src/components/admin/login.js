@@ -22,23 +22,16 @@ class AdminLogin extends Component {
 
     
   }
-
-  // demo = async  ()=>{
-  //   const request= await axios.get("http://localhost:3001/api/demo")
-  //     .then(res=>res.data)
-    
-  // console.log(request)
-  // }
-
+  
   postData = async (obj) => {
     const request = await axios.post("http://localhost:3001/api/admin/login", obj)
-      .then(res=>res.data)
-
-  // console.log(request)
-  // const {token} = request.token;
-  // localStorage.setItem('jwtToken',token);
-  //   setAuthToken(token);
-  //   const decoded =  jwt_decode(token);
+      .then(res=>res.data
+      )
+  const {token} = request;
+  localStorage.setItem('jwtToken',token);
+  setAuthToken(token);
+  // const decoded =  jwt_decode(token);
+  // console.log(decoded);
   if(request.isAuth) {
     this.props.history.push("/admin/dashboard");
     }
