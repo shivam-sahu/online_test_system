@@ -1,0 +1,106 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import axios from "axios";
+import setAuthToken from '../../utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
+
+class AdminLogin extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state={
+      adminId:'',
+      password:'',
+      sucess:false,
+      error:''
+    }
+  }
+  componentDidMount(){
+    // this.postData()
+    // console.log();
+    // this.props.history.push("/admin/dashboard");
+
+    
+  }
+
+  // demo = async  ()=>{
+  //   const request= await axios.get("http://localhost:3001/api/demo")
+  //     .then(res=>res.data)
+    
+  // console.log(request)
+  // }
+
+  postData = async (obj) => {
+    const request = await axios.post("http://localhost:3001/api/admin/login", obj)
+      .then(res=>res.data)
+
+  // console.log(request)
+  // const {token} = request.token;
+  // localStorage.setItem('jwtToken',token);
+  //   setAuthToken(token);
+  //   const decoded =  jwt_decode(token);
+  if(request.isAuth) {
+    this.props.history.push("/admin/dashboard");
+    }
+  }
+
+
+  render() {
+    const{adminId, password}  = this.state;
+    return (<div>
+      
+      <form>
+        Username/Id:<br></br>
+        <input type="text" value={adminId} onChange={(e)=>this.handleAdminIdChange(e)}></input><br></br>
+        password:<br></br>
+        <input type="password" value={password} onChange={(e)=>this.handlePasswordChange(e)}></input><br></br>
+        <button onClick={(e) => this.loginbtnClk(e,adminId, password)}>Login</button>
+      </form>
+      <Link to={`/admin/dashboard`}> admin </Link>
+    </div>
+    );
+  }
+
+  handleAdminIdChange = (e)=>{
+    this.setState({
+      adminId:e.target.value
+    });
+  }
+
+  handlePasswordChange = (e)=>{
+    this.setState({
+      password:e.target.value
+    });
+  }
+
+
+
+  loginbtnClk =(e,adminId, password)=>{
+    e.preventDefault();
+    if(!adminId || !password){
+      console.log("enter username and passoword");
+    }else if(password.length<8){
+      console.log("passsword must contain at least 8 characters!");
+    }
+    else{
+      const credentials  = {
+        adminId,
+        password
+      }
+      this.postData(credentials);
+      this.setState({
+        adminId: '',
+        password: '',
+        sucess: true
+      });
+      // console.log(request);
+    }
+
+    // const request = axios.post("mongodb://localhost:27017/testdb/api/admin/login", { adminId, password})
+    //                   .then(response=>response.data)
+    // console.log(request);             
+  }
+
+}
+
+export default AdminLogin;

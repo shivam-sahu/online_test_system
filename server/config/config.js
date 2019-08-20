@@ -12,3 +12,9 @@ const config = {
 exports.get = function get(env){
   return config[env] || config.default
 }
+// module.exports = config.default;
+// exports.get = function get(env) {
+//   return  config.default
+// }
+
+// module.exports = 

@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const bcrypt  = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const config = require('../config/config').get(process.env.NODE_ENV);
+// const config = require('../config/config').get(process.env.NODE_ENV);
+const keys = require("../config/keys")
 
 const saltRounds  = 10;
 
@@ -69,7 +70,7 @@ adminSchema.methods.comparePassword = function (cadidatePassword, cb) {
 
 adminSchema.methods.generateTokens = function (callback) {
   var admin = this;
-  var token = jwt.sign(admin._id.toHexString(), config.SECRET);
+  var token = jwt.sign(admin._id.toHexString(), keys.SECRET);
   admin.token = token;
   admin.save(function (err, admin) {
     if (err) return callback(err);
@@ -80,7 +81,7 @@ adminSchema.methods.generateTokens = function (callback) {
 adminSchema.statics.findByToken = function (token, callback) {
   var admin  = this;
 
-  jwt.verify(token,config.SECRET,function(err, decode){
+  jwt.verify(token, keys.SECRET,function(err, decode){
     admin.findOne( {"_id":decode,"token":token},function(err, admin){
       if(err) return callback(err);
 
