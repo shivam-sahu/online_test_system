@@ -2,13 +2,19 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const config = require('../config/config').get(process.env.NODE_ENV);
+// const config = require('../config/config').get(process.env.NODE_ENV);
+const config = require('../config/config');
 
 const saltRounds = 10;
 
 const userSchema  = mongoose.Schema({
   
   allowed: Boolean,
+  email:{
+    type:String,
+    required:true,
+    unique:true
+  },
   password: {
     type: String,
     required: true,
@@ -20,9 +26,10 @@ const userSchema  = mongoose.Schema({
   },
   rollNo:{
     type:String,
-    required:true
+    required:true,
+    unique:true
   },
-  seletedAnswers: [
+  selectedAnswers: [
     {
       id: String,
       ans: String

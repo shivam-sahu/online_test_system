@@ -3,7 +3,7 @@ const bcrypt  = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // const config = require('../config/config').get(process.env.NODE_ENV);
-const keys = require("../config/keys")
+const config = require('../config/config');
 
 const saltRounds  = 10;
 
@@ -11,7 +11,13 @@ const adminSchema = mongoose.Schema({
 
   adminId:{
     type:String,
-    required:true
+    required:true,
+    unique:true
+  },
+  email:{
+    type:String,
+    required:true,
+    unique:true
   },
   password:{
     type:String,
@@ -22,7 +28,7 @@ const adminSchema = mongoose.Schema({
     type:String,
     default:"admin"
   },
-  allowedadmins:[
+  allowedAdmins:[
     {
       rollNo:String
     }
@@ -31,16 +37,10 @@ const adminSchema = mongoose.Schema({
     type:String,
     required:true
   },
-  questionsSet:[
-    {
-      id:String,
-      question:String,
-      options:[{
-        id:String,
-        val:String
-      }]
-    }
-  ],
+  exams: [{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"Exam"
+  }],
   token:{
     type:String
   }
@@ -70,7 +70,7 @@ adminSchema.methods.comparePassword = function (cadidatePassword, cb) {
 
 adminSchema.methods.generateTokens = function (callback) {
   var admin = this;
-  var token = jwt.sign(admin._id.toHexString(), keys.SECRET);
+  var token = jwt.sign(admin._id.toHexString(), config.SECRET);
   admin.token = token;
   admin.save(function (err, admin) {
     if (err) return callback(err);
@@ -81,7 +81,7 @@ adminSchema.methods.generateTokens = function (callback) {
 adminSchema.statics.findByToken = function (token, callback) {
   var admin  = this;
 
-  jwt.verify(token, keys.SECRET,function(err, decode){
+  jwt.verify(token, config.SECRET,function(err, decode){
     admin.findOne( {"_id":decode,"token":token},function(err, admin){
       if(err) return callback(err);
 

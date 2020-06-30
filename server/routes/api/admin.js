@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require('passport');
 const jwt  = require("jsonwebtoken");
-const keys  = require("../../config/keys")
+const config  = require("../../config/config")
 
 const {Admin} = require('../../models/admin');
 
@@ -55,7 +55,7 @@ router.post("/login", (req, res) => {
         msg: "wrong password"
       });
       const payload = { adminId: admin.adminId };
-      jwt.sign(payload, keys.SECRET, (err, token) => {
+      jwt.sign(payload, config.SECRET, (err, token) => {
         res.json({
           isAuth: true,
           token: "Bearer " + token

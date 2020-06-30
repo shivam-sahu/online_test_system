@@ -5,24 +5,30 @@
   const bodyParser = require('body-parser');
   const cookieParser = require('cookie-parser');
   // const config = require("./config/config").get(process.env.NODE_ENV);
-  const keys = require("./config/keys");
+  const config = require('./config/config');
   const cors = require("cors");
   const passport =  require("passport");
- 
   
-
+  //? express js configurations
   const app = express();
-
-  mongoose.Promise = global.Promise;
-  mongoose.connect(keys.DATABASE, { useNewUrlParser: true});
   app.use(bodyParser.json());
   app.use(cookieParser());
-  app.use(express.urlencoded({extended:false}));
+  app.use(express.urlencoded({ extended: false }));
   app.use(cors());
 
-
+  //* mongoose configurations
+  mongoose.Promise = global.Promise;
+  mongoose.connect(config.DATABASE, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useFindAndModify:false,
+    useCreateIndex:true
+  })
+    .then(() => console.log("connected to database..."))
+    .catch(err => console.log(err));
+  
+//? passport js configurations
   app.use(passport.initialize());
-
   require('./config/passport')(passport);
 
 
