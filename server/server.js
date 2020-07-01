@@ -16,7 +16,7 @@
   app.use(express.urlencoded({ extended: false }));
   app.use(cors());
 
-  //* mongoose configurations
+  //? mongoose configurations
   mongoose.Promise = global.Promise;
   mongoose.connect(config.DATABASE, { 
     useNewUrlParser: true, 
@@ -30,14 +30,19 @@
 //? passport js configurations
   app.use(passport.initialize());
   require('./config/passport')(passport);
+  app.use(passport.session());
 
 
-  // const {Admin} = require("./models/admin");
-  const {User} = require("./models/user");
+  // const {User} = require("./models/user");
   const {auth} = require("./middleware/auth");
   
-  const Admin  = require("./routes/api/admin")
+  // ? admin routes configuration
+  const Admin  = require("./routes/api/admin");
   app.use('/api/admin',Admin);
+
+  // ? user routes configuration
+  const User = require("./routes/api/user");
+  app.use('/api/user', User);
 
 
   //!testing purpose
@@ -46,6 +51,7 @@
     // if(value === )
     res.send(value)
   });
+  
 
 
 
@@ -93,19 +99,19 @@
 //   });
 
 //?user
-  app.post("/api/user/register",(req, res)=>{
+  // app.post("/api/user/register",(req, res)=>{
 
-    const user = new User(req.body);
+  //   const user = new User(req.body);
 
-    user.save((err, doc)=>{
-      if(err) res.status(400).send(err);
+  //   user.save((err, doc)=>{
+  //     if(err) res.status(400).send(err);
 
-      res.status(200).json({
-        registered:true,
-        msg:"you have been registered for test."
-      });
-    });
-  });
+  //     res.status(200).json({
+  //       registered:true,
+  //       msg:"you have been registered for test."
+  //     });
+  //   });
+  // });
 
   //*Get
 

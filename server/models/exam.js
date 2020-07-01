@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const examSchema  = mongoose.Schema({
 		id: String,
+		name:{
+			type:String,
+			required:true
+		},
 		timeLimit: Date,
 		start: Date,
 		end: Date,
@@ -21,7 +25,8 @@ const examSchema  = mongoose.Schema({
 		}],
 		owner:{
 			type:mongoose.Schema.Types.ObjectId,
-			ref:"Admin"
+			ref:"Admin",
+			// required:true
 		}
 	});
 

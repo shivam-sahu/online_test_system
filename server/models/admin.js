@@ -60,8 +60,8 @@ adminSchema.pre("save", function(next){
   else next();
 });
 
-adminSchema.methods.comparePassword = function (cadidatePassword, cb) {
-  bcrypt.compare(cadidatePassword, this.password, function (err, res) {
+adminSchema.methods.comparePassword = function (candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function (err, res) {
     if (err) return cb(err);
 
     cb(null, res);
