@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import setAuthToken from '../../utils/setAuthToken';
-import jwt_decode from 'jwt-decode';
 
 class AdminLogin extends Component {
   constructor(props) {

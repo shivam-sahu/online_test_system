@@ -30,6 +30,13 @@ class InsertQuestion extends Component {
       this.setState({ optionsText: "", showAddOptionsSpace: false });
     }
   }
+  removeOption=(index)=>{
+    const {options} = this.state;
+    if(index>-1){
+      options.splice(index, 1);
+      this.setState({options:[...options]});
+    }
+  }
   render() {
     const { questionText, showAddOptionsSpace, optionsText, options } = this.state;
     return (
@@ -42,7 +49,10 @@ class InsertQuestion extends Component {
         <div>
           {
             options.map((option, index)=>{
-              return <div key={index}>{String.fromCharCode(97+index)}. {option.value}</div>
+              return <div key={index}>
+              <span onClick={()=>{}}>{String.fromCharCode(97 + index)}. {option.value}</span>
+              <span><button onClick={()=>this.removeOption(index)}>remove</button> </span>
+              </div>
             })
           }
         </div>

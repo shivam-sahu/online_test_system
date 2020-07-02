@@ -63,14 +63,7 @@ router.post("/login", (req, res) => {
     });
   });
 });
-
-// router.post("/postQuestion",passport.authenticate('jwt',{session:false}),(req,res)=>{
-//   // const questionsToPost = {};
-//   // const questionSet = req.user.questionsToPost;
-//   const questionSet = req.body;
-//   res.json({questionSet});
-// });
-
+// ? post Exam 
 router.post("/postExam", passport.authenticate('jwt', {session:false}), (req, res)=>{
   const body  = {...req.body, owner:req.user._id};
 
@@ -99,10 +92,8 @@ router.post("/postExam", passport.authenticate('jwt', {session:false}), (req, re
 });
 
 //* get
-
+//? getExam 
 router.get("/getExam", passport.authenticate('jwt', {session:false}), (req, res)=>{
-  // console.log(req.query);
-  // res.json({"msg":"working!"});
   Exam.findOne({name:req.query.examName, owner:req.user._id})
   .then(exam=>{
     res.send(exam);
@@ -112,6 +103,8 @@ router.get("/getExam", passport.authenticate('jwt', {session:false}), (req, res)
 
 
 // * delete 
+
+//? delete Exam
 router.delete("/deleteExam", passport.authenticate('jwt', { session: false }),async (req, res)=>{
   
   const examId =await Exam.findOne({ name: req.query.examName, owner: req.user._id})
@@ -135,19 +128,18 @@ router.delete("/deleteExam", passport.authenticate('jwt', { session: false }),as
     res.json({ "msg": "exam not found" });
   }
 });
-// router.get("/profile", passport.authenticate('jwt', { session: false }), (req, res) => {
-  //   const errors = {};
-  //   // res.json({success:true})
-  //   console.log(req.user);
-  //   Admin.findOne({adminId:req.user.adminId})
-  //     .then(admin=>{
-  //       if(!admin){
-  //         errors.noprofile = "No profile found for this Id"
-  //         return res.status(404).json(errors);
-  //       }
-  //       res.json(admin.questionsSet);
-  //     })
-  //     .catch(err=>res.status(404).json(err));
-  // });
+
+// ? update
+
+router.put("/updateExam", passport.authenticate('jwt', { session: false }), async (req, res)=>{
+  const {body:exam} = req;
+  // console.log(req.body);
+  Exam.findByIdAndUpdate(exam._id, exam, {new:true})
+  .then(exam=>{
+    if(exam) res.status(200).send(exam);
+    else res.status(400).json({"msg":"update failed"})
+  })
+  .catch(err=>{throw err});
+});
 
 module.exports = router;
