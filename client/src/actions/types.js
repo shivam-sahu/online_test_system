@@ -5,3 +5,4 @@ export const ON_PRE = "ON_PRE";
 // * admin
 export const FETCH_QUESTIONS = "FETCH_QUESTIONS";
 export const INSERT_QUESTION = "INSERT_QUESTION";
+export const DELETE_EXAM = "DELETE_EXAM";

@@ -8,7 +8,7 @@ const setExamReducer = (state= initialState, action)=>{
 	const {type, payload} = action;
 	switch(type){
 		case(FETCH_QUESTIONS):{
-			const {questions} = payload;
+			const {questionsSet:questions} = payload;
 			return {...state, questions, payload};
 		}
 		// case(INSERT_QUESTION):{

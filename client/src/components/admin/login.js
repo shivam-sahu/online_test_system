@@ -11,7 +11,7 @@ class AdminLogin extends Component {
     this.state={
       adminId:'',
       password:'',
-      sucess:false,
+      success:false,
       error:''
     }
   }
@@ -71,9 +71,9 @@ class AdminLogin extends Component {
   loginbtnClk =(e,adminId, password)=>{
     e.preventDefault();
     if(!adminId || !password){
-      console.log("enter username and passoword");
+      console.log("enter username and password");
     }else if(password.length<8){
-      console.log("passsword must contain at least 8 characters!");
+      console.log("password must contain at least 8 characters!");
     }
     else{
       const credentials  = {
@@ -84,14 +84,9 @@ class AdminLogin extends Component {
       this.setState({
         adminId: '',
         password: '',
-        sucess: true
+        success: true
       });
-      // console.log(request);
-    }
-
-    // const request = axios.post("mongodb://localhost:27017/testdb/api/admin/login", { adminId, password})
-    //                   .then(response=>response.data)
-    // console.log(request);             
+    }        
   }
 
 }

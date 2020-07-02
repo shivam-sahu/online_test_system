@@ -11,10 +11,10 @@ const examSchema  = mongoose.Schema({
 		questionsSet: [
 			{
 				id: String,
-				question: String,
+				questionText: String,
 				options: [{
 					id: String,
-					val: String
+					value: String
 				}],
 				correctAnsId: String
 			}

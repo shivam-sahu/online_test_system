@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import InsertQuestion from './insertQuestion';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchQuestions, insertQuestion } from "../../../actions/adminActions";
+import { deleteExam, fetchQuestions, insertQuestion } from "../../../actions/adminActions";
 
 class SetExam extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class SetExam extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchQuestions();
+    this.props.fetchQuestions("exam1");
   }
   renderPreviousQuestions = (value, index) => {
     const { options, questionText, id, correctAnsId } = value;
@@ -46,12 +46,14 @@ class SetExam extends Component {
     this.setState({ showInsertQuestion: false });
   };
   render() {
-		const { questions, payload } = this.props;
+		const { questions } = this.props;
     return (
       <div>
-        {questions.map((value, index) => {
-          return this.renderPreviousQuestions(value, index);
-        })}
+        {
+          questions.map((value, index) => {
+          return this.renderPreviousQuestions(value, index)
+        })
+        }
         {this.state.showInsertQuestion ? (
           <InsertQuestion onDone={this.onDone} />
         ) : (
@@ -59,13 +61,14 @@ class SetExam extends Component {
             Add Question
           </div>
         )}
+        <button onClick={()=>this.props.deleteExam("exam1")}>Delete Exam</button>
       </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch)=>{
-	return bindActionCreators({ fetchQuestions, insertQuestion }, dispatch);
+  return bindActionCreators({ deleteExam, fetchQuestions, insertQuestion }, dispatch);
 }
 
 const mapStateToProps = (state)=>{
