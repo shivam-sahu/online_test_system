@@ -1,40 +1,27 @@
 import React, {Component} from 'react';
-import InsertQuestion from './insertQuestion';
+import EditQuestion from './editQuestion/editQuestion';
+import RenderPreviousQuestion from './renderPreviousQuestions';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { deleteExam, fetchQuestions, insertQuestion, postExam, removeQuestion, updateExam } from "../../../actions/adminActions";
+import './setExam.css';
 
 class SetExam extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showInsertQuestion: false,
+      isQuestionCrossHover:false
     };
   }
   componentDidMount() {
     this.props.fetchQuestions("exam1");
   }
-  renderPreviousQuestions = (value, index) => {
-    const { options, questionText, id, correctAnsId } = value;
-    return (
-      <div key={index}>
-        <div>
-        <span>{index+1}. {questionText}</span>
-        <span><button onClick={() => { this.props.removeQuestion(index) }} >remove</button></span>
-        </div>
-        <div>
-          {options.map((val, idx) => {
-            return (
-              <div key={idx}>
-                {String.fromCharCode(97 + idx)}. {val.value}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
+  onCancel=()=>{
+    this.setState({showInsertQuestion:false});
+  }
   onDone =async (questionText, options, correctAnsId=null) => {
+    console.log(correctAnsId);
 		const {props:{ questionsSet: oldQuestions }} = this;
 		const questionObject = {
       id: (oldQuestions.length+1).toString(),
@@ -73,21 +60,30 @@ class SetExam extends Component {
   render() {
 		const { questionsSet } = this.props;
     return (
-      <div>
+      <div className='setQuestionContainer'>
+        {
+          this.state.showInsertQuestion ? (<EditQuestion onDone={this.onDone} onCancel={this.onCancel}/>):null
+        }
         {
           questionsSet.map((value, index) => {
-          return this.renderPreviousQuestions(value, index)
+           return <RenderPreviousQuestion key={index} value= {value} index={index} removeQuestion={this.props.removeQuestion}/>
         })
         }
         {
-          this.state.showInsertQuestion ? 
-          (<InsertQuestion onDone={this.onDone} />) :
+          this.state.showInsertQuestion ? null :
           (<div onClick={() => this.setState({ showInsertQuestion: true })}>
             Add Question
           </div>)
         }
         <button onClick={()=>{this.onSave()}}>Save</button>
         <button onClick={()=>this.props.deleteExam("exam1")}>Delete Exam</button>
+
+        {/* <div className='wrapper'>
+          <div className='shadow'></div>
+          <div className='button-center'>
+            Button
+            </div>
+        </div> */}
       </div>
     );
   }
