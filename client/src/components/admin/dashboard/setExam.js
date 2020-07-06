@@ -1,17 +1,20 @@
 import React, {Component} from 'react';
+import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
 import EditQuestion from './editQuestion/editQuestion';
 import RenderPreviousQuestion from './renderPreviousQuestions';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { deleteExam, fetchQuestions, insertQuestion, postExam, removeQuestion, updateExam } from "../../../actions/adminActions";
 import './setExam.css';
-
+// import './dateTimeStyle.less';
+// import './dateTime.css';
 class SetExam extends Component {
   constructor(props) {
     super(props);
     this.state = {
       showInsertQuestion: false,
-      isQuestionCrossHover:false
+      isQuestionCrossHover:false,
+      date:new Date()
     };
   }
   componentDidMount() {
@@ -57,10 +60,22 @@ class SetExam extends Component {
       this.props.updateExam({...exam, _id});
     }
   }
+  onDateChange=(date)=>{
+    this.setState({date});
+  }
   render() {
 		const { questionsSet } = this.props;
     return (
       <div className='setQuestionContainer'>
+      <div className='saveButtonContainer'>
+        <button className='saveButton' onClick={() => { this.onSave() }}>Save</button>
+      </div>
+        {/* <span>
+          <DateTimePicker
+            onChange={(date)=>this.onDateChange(date)}
+            value={this.state.date}
+          />
+        </span> */}
         {
           this.state.showInsertQuestion ? (<EditQuestion onDone={this.onDone} onCancel={this.onCancel}/>):null
         }
@@ -71,19 +86,13 @@ class SetExam extends Component {
         }
         {
           this.state.showInsertQuestion ? null :
-          (<div onClick={() => this.setState({ showInsertQuestion: true })}>
+          (<div className='addQuestionText' onClick={() => this.setState({ showInsertQuestion: true })}>
             Add Question
           </div>)
         }
-        <button onClick={()=>{this.onSave()}}>Save</button>
-        <button onClick={()=>this.props.deleteExam("exam1")}>Delete Exam</button>
-
-        {/* <div className='wrapper'>
-          <div className='shadow'></div>
-          <div className='button-center'>
-            Button
-            </div>
-        </div> */}
+        <div className='deleteExamContainer'>
+        <button className='deleteButton' onClick={() => this.props.deleteExam("exam1")}>Delete Exam</button>
+        </div>
       </div>
     );
   }

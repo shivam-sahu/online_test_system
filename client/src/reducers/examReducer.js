@@ -1,8 +1,8 @@
 import { ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE} from '../actions/types';
-// import { jsonQuestions} from '../data.json';
+import { jsonQuestions} from './data.json';
 const initialState = {
-	// fetchedQuestionSet: jsonQuestions,
-	fetchedQuestionSet:null,
+	fetchedQuestionSet: jsonQuestions,
+	// fetchedQuestionSet:null,
 	currentAttempting:0,
 	responseArray: [{ attempted: false, questionId: null, responseId: null }, { attempted: false, questionId: null, responseId: null }, { attempted: false, questionId: null, responseId: null}, { attempted: false, questionId: null, responseId: null}, { attempted: false, questionId: null, responseId: null}],
 	markedForReview: [false, false, false, false, false],

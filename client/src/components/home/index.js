@@ -11,7 +11,9 @@ const Home = () => {
         </Link>       
       </div>  
       <div>
-      <button>student</button>
+      <Link to={'/user/login'}>
+        <button>student</button>
+      </Link>
       </div>
     </div>
   )

@@ -1,0 +1,114 @@
+{
+	"jsonQuestions": [
+		{
+			"id": "1",
+			"question": "Shneiderman's golden rule, offer simple error handling, deals with which of the following?",
+			"options": [
+				{
+					"id": "1",
+					"val": "All of these answers are correct."
+				},
+				{
+					"id": "2",
+					"val": "Automatic error recovery"
+				},
+				{
+					"id": "3",
+					"val": "Preventing errors"
+				},
+				{
+					"id": "4",
+					"val": "Easy user error recovery"
+				}
+			]
+		},
+		{
+			"id": "2",
+			"question": "Ben Shneiderman is a distinguished professor at which academic institution?",
+			"options": [
+				{
+					"id": "1",
+					"val": "Ottawa University"
+				},
+				{
+					"id": "2",
+					"val": "University of Maryland"
+				},
+				{
+					"id": "3",
+					"val": "University of Oxford"
+				},
+				{
+					"id": "4",
+					"val": "University of Manitoba"
+				}
+			]
+		},
+		{
+			"id": "3",
+			"question": "Microsoft Word's undo button is an example of which Sneiderman's golden rule?",
+			"options": [
+				{
+					"id": "1",
+					"val": "Offer simple error handling"
+				},
+				{
+					"id": "2",
+					"val": "None of these answers are correct."
+				},
+				{
+					"id": "3",
+					"val": "Permit easy reversal of actions"
+				},
+				{
+					"id": "4",
+					"val": "Strive for consistency"
+				}
+			]
+		},
+		{
+			"id": "4",
+			"question": "Why should a development team not rely on an expert usability inspection?",
+			"options": [
+				{
+					"id": "1",
+					"val": "An expert might not offer an objective response by being too close to the development."
+				},
+				{
+					"id": "2",
+					"val": "An app might be designed for people working on it than actual users."
+				},
+				{
+					"id": "3",
+					"val": "An expert user might make different assumptions than ordinary users."
+				},
+				{
+					"id": "4",
+					"val": "This might result in a program that might be difficult to use."
+				}
+			]
+		},
+		{
+			"id": "5",
+			"question": "What is the process of organizing information in an app?",
+			"options": [
+				{
+					"id": "1",
+					"val": "Information architecture."
+				},
+				{
+					"id": "2",
+					"val": "User analysis."
+				},
+				{
+					"id": "3",
+					"val": "Usability testing."
+				},
+				{
+					"id": "4",
+					"val": "Prototyping"
+				}
+			]
+		}
+	]
+}

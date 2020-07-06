@@ -19,7 +19,7 @@ const examSchema  = mongoose.Schema({
 				correctAnsId: String
 			}
 		],
-		userGivenExam:[{
+		usersGivenExam:[{
 			type: mongoose.Schema.Types.ObjectId,
 			ref:"User"
 		}],

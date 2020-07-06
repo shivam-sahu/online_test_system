@@ -24,33 +24,15 @@ const userSchema  = mongoose.Schema({
     type:String,
     default:"user"
   },
-  rollNo:{
+  userId:{
     type:String,
     required:true,
     unique:true
   },
-  selectedAnswers: [
-    {
-      id: String,
-      ans: String
-    }
-  ],
-  subject:{
-    type:String
-  },
-  totalRight: {
-    type: String
-  },
-  totalWrong: {
-    type: String
-  },
-  totalScore: {
-    type: String
-  },
-  token:{
-    type:String
-  }
-
+  givenExamResponse:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'Response'
+  }]
 });
 
 userSchema.pre("save", function(next){
@@ -67,8 +49,8 @@ userSchema.pre("save", function(next){
 });
 
 
-userSchema.methods.comparePassword = function(cadidatePassword, cb){
-  bcrypt.compare(cadidatePassword, this.password, function (err, res) {
+userSchema.methods.comparePassword = function(candidatePassword, cb){
+  bcrypt.compare(candidatePassword, this.password, function (err, res) {
     if(err) return cb(err);
 
     cb(null,res);
@@ -86,6 +68,26 @@ userSchema.methods.generateTokens = function( callback){
     callback(null,user);
   });
 };
+
+userSchema.statics.findByToken = function (token, callback) {
+  var user = this;
+  jwt.verify(token, config.SECRET, function (err, decode) {
+    user.findOne({ "_id": decode, "token": token }, function (err, user) {
+      if (err) return callback(err);
+
+      callback(null, user);
+    });
+  });
+};
+
+userSchema.methods.deleteToken = function (token, callback) {
+  var user = this;
+
+  user.update({ $unset: { token: 1 } }, (err, user) => {
+    if (err) return callback(err);
+    callback(null, user)
+  })
+}
 
 
 

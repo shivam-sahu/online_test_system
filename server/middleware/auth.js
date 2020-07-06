@@ -1,16 +1,27 @@
 const {Admin}  = require("../models/admin");
+const {User} = require("../models/user");
 
 let auth = (req, res, next)=>{
   let token = req.cookies.auth;
 
-  Admin.findByToken(token,(err, admin)=>{
-    if(err) throw err;
-    if(!admin) return res.json({
-      error:true
+  // Admin.findByToken(token,(err, admin)=>{
+  //   if(err) throw err;
+  //   if(!admin) return res.json({
+  //     error:true
+  //   });
+
+  //   req.token = token;
+  //   req.admin = admin;
+  //   next();
+  // })
+  User.findByToken(token, (err, user) => {
+    if (err) throw err;
+    if (!user) return res.json({
+      error: true
     });
 
     req.token = token;
-    req.admin = admin;
+    req.user = user;
     next();
   })
 }

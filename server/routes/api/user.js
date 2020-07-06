@@ -13,10 +13,17 @@ router.get('/test', (req, res) => {
 		msg: "wo this works."
 	});
 });
+router.get('/auth', passport.authenticate('jwt', { session: false }), (req, res)=>{
+	// console.log()
+	res.json({
+		msg:"auth route this works!"
+	})
+});
+
 //*post
+// ? register user
 router.post("/register", (req, res) => {
-	// console.log(req.body.email);
-	User.findOne({ email: req.body.email, rollNo: req.body.rollNo })
+	User.findOne({ email: req.body.email, userId: req.body.userId })
 		.then(user => {
 			if (user) {
 				return res.status(400).json({ email: "Already registered" });
@@ -24,10 +31,12 @@ router.post("/register", (req, res) => {
 				const newUser = new User(req.body);
 				newUser.save((err, doc) => {
 					if (err) res.status(400).send(err);
-					res.status(200).json({
-						registered: true,
-						msg: "Account created"
-					});
+					else{
+						res.status(200).json({
+							registered: true,
+							msg: "Account created"
+						});	
+					}
 				});
 			}
 		})
@@ -35,10 +44,11 @@ router.post("/register", (req, res) => {
 
 });
 
+//? login user
 router.post("/login", (req, res) => {
-	const rollNo = req.body.rollNo;
+	const userId = req.body.userId;
 
-	User.findOne({ rollNo })
+	User.findOne({ userId })
 		.then(user => {
 			if (!user) {
 				return res.json({ isAuth: false, message: "user not registered" });
@@ -50,7 +60,7 @@ router.post("/login", (req, res) => {
 					isAuth: false,
 					msg: "wrong password"
 				});
-				const payload = { rollNo: user.rollNo };
+				const payload = { userId: user.userId };
 				jwt.sign(payload, config.SECRET, (err, token) => {
 					res.json({
 						isAuth: true,
