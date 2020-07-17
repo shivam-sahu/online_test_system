@@ -8,6 +8,7 @@
   const config = require('./config/config');
   const cors = require("cors");
   const passport =  require("passport");
+  const {checkUserType} = require("./middleware/checkUserType");
   
   //? express js configurations
   const app = express();
@@ -29,12 +30,13 @@
   
 //? passport js configurations
   app.use(passport.initialize());
-  require('./config/passport')(passport);
+  // check if it is admin or user
+  app.use(checkUserType);
   app.use(passport.session());
 
 
   // const {User} = require("./models/user");
-  const {auth} = require("./middleware/auth");
+  // const {auth} = require("./middleware/auth");
   
   // ? admin routes configuration
   const Admin  = require("./routes/api/admin");

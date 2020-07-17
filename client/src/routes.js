@@ -6,6 +6,7 @@ import AdminLogin from './components/admin/login';
 import AdminDashboard from './components/admin/dashboard';
 import UserLogin from './components/user/login';
 import UserDashboard from './components/user/dashboard';
+import UserExam from './components/user/dashboard/exam';
 
 const Routes = ()=>{
   return(
@@ -15,6 +16,7 @@ const Routes = ()=>{
       <Route path="/user/login" component={UserLogin} />
       <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route path="/user/dashboard" component={UserDashboard} />
+      <Route path="/user/exam" component={UserExam} />
     </Switch>
   );
 }

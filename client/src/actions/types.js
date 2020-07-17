@@ -1,3 +1,5 @@
+export const GET_EXAM = "GET_EXAM";
+export const INPUT_KEYS = "INPUT_KEYS";
 export const ON_NEXT = "ON_NEXT";
 export const ON_OPTIONS_CHANGE = "ON_OPTIONS_CHANGE";
 export const ON_PRE = "ON_PRE";

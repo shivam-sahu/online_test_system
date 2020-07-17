@@ -24,10 +24,11 @@ const examSchema  = mongoose.Schema({
 			ref:"User"
 		}],
 		owner:{
-			type:mongoose.Schema.Types.ObjectId,
-			ref:"Admin",
+					type:mongoose.Schema.Types.ObjectId,
+					ref:"Admin"
 			// required:true
-		}
+		},
+		ownerKey: String
 	});
 
 	const Exam = mongoose.model('Exam', examSchema);

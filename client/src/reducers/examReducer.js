@@ -1,18 +1,37 @@
-import { ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE} from '../actions/types';
-import { jsonQuestions} from './data.json';
+import {GET_EXAM,INPUT_KEYS, ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE} from '../actions/types';
 const initialState = {
-	fetchedQuestionSet: jsonQuestions,
-	// fetchedQuestionSet:null,
+	fetchedQuestionSet: [],
 	currentAttempting:0,
-	responseArray: [{ attempted: false, questionId: null, responseId: null }, { attempted: false, questionId: null, responseId: null }, { attempted: false, questionId: null, responseId: null}, { attempted: false, questionId: null, responseId: null}, { attempted: false, questionId: null, responseId: null}],
-	markedForReview: [false, false, false, false, false],
+	responseArray: [],
+	markedForReview: [],
 	isFirstQuestion:true,
-	isLastQuestion:false
+	isLastQuestion:false,
+	adminKey:"",
+	examKey:""
 };
 
 const examReducer = (state= initialState, action)=>{
 	const {payload, type} = action;
 	switch(type){
+		case(GET_EXAM):{
+			const {exam:{questionsSet:fetchedQuestionSet}} = payload;
+			const totalQuestions = fetchedQuestionSet.length;
+			const responseArray = [];
+			const markedForReview = [];
+			for(let i=0;i<totalQuestions;++i){
+				responseArray.push({
+					attempted:false,
+					questionId:null,
+					responseId:null
+				});
+				markedForReview.push(false);
+			}
+			return {...state, fetchedQuestionSet, responseArray, markedForReview };
+		}
+		case(INPUT_KEYS):{
+			const {adminKey, examKey} = payload;
+			return {...state, adminKey, examKey };
+		}
 		case(ON_OPTIONS_CHANGE):{
 			const {response} = payload;
 			// console.log(response);

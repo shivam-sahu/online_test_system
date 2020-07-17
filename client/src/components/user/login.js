@@ -15,9 +15,6 @@ class AdminLogin extends Component {
 		}
 	}
 	componentDidMount() {
-		// this.postData()
-		// console.log();
-		// this.props.history.push("/admin/dashboard");
 
 
 	}

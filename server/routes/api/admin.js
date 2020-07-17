@@ -65,9 +65,9 @@ router.post("/login", (req, res) => {
 });
 // ? post Exam 
 router.post("/postExam", passport.authenticate('jwt', {session:false}), (req, res)=>{
-  const body  = {...req.body, owner:req.user._id};
+  const body  = {...req.body, owner:req.user._id,ownerKey:req.user.adminId};
 
-  Exam.findOne({name:body.name, owner:req.user._id})
+  Exam.findOne({ name: body.name, owner: req.user._id})
   .then(exam=>{
     if(exam){
       return res.status(400).json({'msg':'Exam name already exists please choose a different one.'})

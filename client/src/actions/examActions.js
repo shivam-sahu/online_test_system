@@ -1,5 +1,23 @@
-import { ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE} from './types';
+import { GET_EXAM, INPUT_KEYS, ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE} from './types';
+import axios from '../utils/axios';
 
+export const getExam =keys=>async dispatch=>{
+  console.log(keys);
+  const response = await axios.get('/api/user/getExam',{params: keys})
+  .then(res=>res.data)
+  .catch(err=>{throw err;});
+  dispatch({
+    type:GET_EXAM,
+    payload:response
+  });
+}
+
+export const inputKeys = (keys) =>{
+  return{
+    type:INPUT_KEYS,
+    payload:keys
+  }
+}
 export const onNext=(details)=>{
 	const { questionId, wantReview } = details;
 	return {

@@ -1,0 +1,45 @@
+.progressBar{
+	background: rgb(10, 10, 27);
+	display: flex;
+	justify-content: center;
+	height: 45px;
+	align-items: center;
+}
+
+.checkpoint{
+	width: 35px;
+  height: 35px;
+  transform: skew(-25deg, 0deg);
+  color: #fff;
+  font-weight: bolder;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 1;
+	backdrop-filter: blur(3px);
+	border: 1px solid;
+  box-shadow: 2px 2px 5px rgba(255,255,255,0.5);
+	
+	margin:2px;
+}
+.checkpoint:hover{
+	width: 37px;
+	height: 37px;
+	/* border: 1px solid; */
+	z-index: 2;
+	/* box-shadow: 2px 2px 5px rgba(255,255,255,0.5); */
+}
+
+.blueItem{
+	background: rgba(45,52,223);
+}
+.greenItem{
+	background:rgba(46,164,79);
+}
+
+.yellowItem{
+	background: rgba(241, 201, 66);
+}
+.greyItem{
+	background:rgba(244,249,253, 0.6);
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { onNext, onOptionsChange, onPre } from '../../../actions/examActions';
-
+import styles from  './question.module.css';
 class Questions extends React.Component {
 	constructor(props) {
 		super(props);
@@ -16,7 +16,6 @@ class Questions extends React.Component {
 	componentDidMount() {
 		const { currentAttempting, markedForReview } = this.props;
 		this.setState({ wantReview: markedForReview[currentAttempting] });
-		// console.log(2);
 	}
 
 	onOptionsClick = async (optionId) => {
@@ -60,26 +59,42 @@ class Questions extends React.Component {
 	}
 
 	render() {
-		const { wantReview } = this.state;
+		const { wantReview, selectedResponse } = this.state;
 		const { currentAttempting, fetchedQuestionSet } = this.props;
-		const { id: questionId, question, options } = fetchedQuestionSet[currentAttempting];
-		console.log(this.props.markedForReview);
+		// if(fetchedQuestionSet !== 0){
+
+		// 	const { id: questionId, questionText, options } = fetchedQuestionSet[currentAttempting];
+		// }
 		return (
-			<div>
-				<div>{question}</div>
-				<div>
-					{
-						options.map((value, index) => (
-							<div key={index} onClick={() => this.onOptionsClick(value.id)}> {value.val} </div>
-						))
-					}
-				</div>
-				<div>
-					<button onClick={() => this.onReview()}>Review Later</button>
-					<button onClick={() => this.onPreClick({ questionId, wantReview })}>Previous</button>
-					<button onClick={() => this.onNextClick({ questionId, wantReview })}>Next</button>
-				</div>
-			</div>
+		<div>
+			{
+				fetchedQuestionSet.length === 0 ? null:
+					<div className={styles.questionWrapper}>
+						<div className={styles.questionContainer}>
+								<div className={styles.questionBlock}>{fetchedQuestionSet[currentAttempting].questionText}
+							</div>
+							<div className={styles.optionBlock}>
+								{
+										fetchedQuestionSet[currentAttempting].options.map((option, index) => (
+										<div key={index}
+											className={`${styles.option} ${selectedResponse === option.id ? styles.selectedOption : ""}`}
+											onClick={() => this.onOptionsClick(option.id)}>
+											<span className={styles.optionIndex}>{String.fromCharCode(65 + index)}.</span>
+											<span className={styles.optionText}>{option.value}</span>
+										</div>
+									))
+								}
+							</div>
+						</div>
+						<div className='actionBlock'>
+							<button onClick={() => this.onPreClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Previous</button>
+							<button onClick={() => this.onReview()}>Review Later</button>
+							<button onClick={() => this.onNextClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Next</button>
+						</div>
+					</div>
+			}
+		</div>
+
 		);
 	}
 }
