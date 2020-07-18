@@ -1,8 +1,13 @@
-import { GET_EXAM, INPUT_KEYS, ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE} from './types';
+import { GET_EXAM, 
+  INPUT_KEYS, 
+  ON_NEXT, 
+  ON_OPTIONS_CHANGE, 
+  ON_PRE,
+  ON_SUBMIT
+} from './types';
 import axios from '../utils/axios';
 
 export const getExam =keys=>async dispatch=>{
-  console.log(keys);
   const response = await axios.get('/api/user/getExam',{params: keys})
   .then(res=>res.data)
   .catch(err=>{throw err;});
@@ -48,3 +53,12 @@ export const onPre = (details) => {
     }
   };
 };
+export const onSubmit = userResponse=> async dispatch=>{
+  const response = axios.post("/api/user/sendResponse", userResponse)
+  .then(res=>res.data)
+  .catch(err=>{throw err;});
+  dispatch({
+    type:ON_SUBMIT,
+    payload:response
+  })
+}

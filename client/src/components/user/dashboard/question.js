@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { onNext, onOptionsChange, onPre } from '../../../actions/examActions';
+import { onNext, onOptionsChange, onPre, onSubmit } from '../../../actions/examActions';
 import styles from  './question.module.css';
+import { withRouter } from 'react-router-dom';
 class Questions extends React.Component {
 	constructor(props) {
 		super(props);
@@ -54,13 +55,16 @@ class Questions extends React.Component {
 	onReview = () => {
 		this.setState({ wantReview: !this.state.wantReview });
 	}
-	onSubmit = () => {
-
+	onSubmit =async (response) => {
+		await this.onNextClick(response);
+		const {adminKey, examKey, responseArray} = this.props;
+		await this.props.onSubmit({adminKey, examName:examKey, responseArray});
+		this.props.history.push('/user/result');
 	}
 
 	render() {
 		const { wantReview, selectedResponse } = this.state;
-		const { currentAttempting, fetchedQuestionSet } = this.props;
+		const { currentAttempting, fetchedQuestionSet, isLastQuestion } = this.props;
 		// if(fetchedQuestionSet !== 0){
 
 		// 	const { id: questionId, questionText, options } = fetchedQuestionSet[currentAttempting];
@@ -89,7 +93,12 @@ class Questions extends React.Component {
 						<div className='actionBlock'>
 							<button onClick={() => this.onPreClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Previous</button>
 							<button onClick={() => this.onReview()}>Review Later</button>
-							<button onClick={() => this.onNextClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Next</button>
+							{
+								isLastQuestion ? 
+									<button onClick={() => this.onSubmit({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Submit</button>:
+									<button onClick={() => this.onNextClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Next</button>
+							}
+							{/* <button onClick={() => this.onNextClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Next</button> */}
 						</div>
 					</div>
 			}
@@ -99,10 +108,10 @@ class Questions extends React.Component {
 	}
 }
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({ onNext, onOptionsChange, onPre }, dispatch);
+	return bindActionCreators({ onNext, onOptionsChange, onPre, onSubmit }, dispatch);
 }
 const mapStateToProps = (state) => {
 	const { exam } = state;
 	return exam;
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Questions);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Questions));

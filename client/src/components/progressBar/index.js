@@ -8,7 +8,6 @@ class ProgressBar extends React.Component {
 		super(props);
 	}
 	render(){
-		// console.log(this.props);
 		const { markedForReview, currentAttempting, responseArray} = this.props;
 	return (
 	<div className={styles.progressBar}>
@@ -28,8 +27,6 @@ class ProgressBar extends React.Component {
 	);
 	}
 }
-
-
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({ }, dispatch);

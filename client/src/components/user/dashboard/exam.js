@@ -5,7 +5,7 @@ import Header from '../../header/userHeader';
 import ProgressBar from '../../progressBar';
 import Questions from './question';
 
-const Exam = () => {
+const Exam = (props) => {
 	const {adminKey, examKey:examName} = useSelector(state=>state.exam);
 	const dispatch = useDispatch();
 	useEffect(()=>{

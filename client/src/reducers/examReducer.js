@@ -1,4 +1,4 @@
-import {GET_EXAM,INPUT_KEYS, ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE} from '../actions/types';
+import {GET_EXAM,INPUT_KEYS, ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE, ON_SUBMIT} from '../actions/types';
 const initialState = {
 	fetchedQuestionSet: [],
 	currentAttempting:0,
@@ -7,7 +7,8 @@ const initialState = {
 	isFirstQuestion:true,
 	isLastQuestion:false,
 	adminKey:"",
-	examKey:""
+	examKey:"",
+	score:0
 };
 
 const examReducer = (state= initialState, action)=>{
@@ -57,6 +58,10 @@ const examReducer = (state= initialState, action)=>{
 			const isFirstQuestion = newIndex === 0 ? true : false;
 			const newReviewArray = [...markedForReview.slice(0, currentAttempting), wantReview, ...markedForReview.slice(currentAttempting + 1)];
 			return { ...state, currentAttempting: newIndex, markedForReview: newReviewArray, isFirstQuestion, isLastQuestion };
+		}
+		case(ON_SUBMIT):{
+			const {score} = payload;
+			return {...state, score};
 		}
 		default:
 			return state;

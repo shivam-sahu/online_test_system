@@ -103,4 +103,25 @@ router.post("/login", (req, res) => {
 		});
 });
 
+router.post("/sendResponse", passport.authenticate('jwt', {session:false}), (req, res)=>{
+	const {adminKey, examName, responseArray} = req.body;
+
+	Exam.findOne({ownerKey:adminKey, name:examName})
+	.then(exam=>{
+		if(exam){
+			const {_doc:{questionsSet}} = exam;
+			let score = 0;
+			for(let i=0;i<questionsSet.length;++i){
+				const { id, correctAnsId} = questionsSet[i];
+				const {questionId, responseId} = responseArray[i];
+				if(questionId === id && responseId=== correctAnsId){
+					score++;
+				}
+			}
+			res.status(200).json({score});
+		}
+	})
+	.catch(err=>{throw err;});
+});
+
 module.exports = router;
