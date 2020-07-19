@@ -19,14 +19,13 @@ const examSchema  = mongoose.Schema({
 				correctAnsId: String
 			}
 		],
-		usersGivenExam:[{
+		examResponses:[{
 			type: mongoose.Schema.Types.ObjectId,
-			ref:"User"
+			ref:"Response"
 		}],
 		owner:{
 					type:mongoose.Schema.Types.ObjectId,
 					ref:"Admin"
-			// required:true
 		},
 		ownerKey: String
 	});

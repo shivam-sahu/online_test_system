@@ -7,6 +7,7 @@ const config = require("../../config/config")
 const { User } = require('../../models/user');
 const {Exam} = require('../../models/exam');
 const {Admin}  = require('../../models/admin');
+const {Response} = require('../../models/response');
 
 // * api -> /api/user/
 //!test
@@ -104,12 +105,12 @@ router.post("/login", (req, res) => {
 });
 
 router.post("/sendResponse", passport.authenticate('jwt', {session:false}), (req, res)=>{
-	const {adminKey, examName, responseArray} = req.body;
+	const {adminKey:ownerKey, examName, responseArray} = req.body;
 
-	Exam.findOne({ownerKey:adminKey, name:examName})
+	Exam.findOne({ownerKey, name:examName})
 	.then(exam=>{
 		if(exam){
-			const {_doc:{questionsSet}} = exam;
+			const {_doc:{questionsSet, _id:exam_id, owner:owner_id}} = exam;
 			let score = 0;
 			for(let i=0;i<questionsSet.length;++i){
 				const { id, correctAnsId} = questionsSet[i];
@@ -118,7 +119,44 @@ router.post("/sendResponse", passport.authenticate('jwt', {session:false}), (req
 					score++;
 				}
 			}
-			res.status(200).json({score});
+				// console.log(req.user)
+				const {userId, _id:user_id} = req.user;
+				Response.findOne({ownerKey, examKey:examName, userId:req.user.userId})
+				.then(response=>{
+					if(response){
+						return res.status(400).json({msg:"Already given exam"});
+					}else {
+						const responseObject = {
+							ownerKey,
+							examKey:examName,
+							userId,
+							userGivenExam:user_id,
+							examGiven:exam_id,
+							admin:owner_id,
+							response:responseArray,
+							score
+						};
+						const newResponse = new Response(responseObject)
+						newResponse.save((err, doc)=>{
+							if(err) return res.status(400).json({msg:"error in saving response"});
+							else {
+								// update givenExamResponse array in user
+								User.findOneAndUpdate({ _id: user_id }, { $addToSet: { givenExamResponse: [doc._id] }}, (err, result)=>{
+									if(err){
+										return res.status(400).json({msg:"error in updating response array in user model"})
+									}else{
+										// update examResponses array in exam
+										Exam.findOneAndUpdate({_id:exam_id}, {$addToSet:{examResponses:[doc._id]}}, (error, result)=>{
+											if(error) return res.status(400).json({msg:"error in updating response array in exam"});
+											else{
+												return res.status(200).send({ score });}
+										})
+									}
+								})			
+							}
+						})
+					}
+				})
 		}
 	})
 	.catch(err=>{throw err;});

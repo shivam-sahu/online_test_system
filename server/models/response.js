@@ -12,6 +12,9 @@ const responseSchema = mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "Admin",
 	},
+	ownerKey:String,
+	examKey:String,
+	userId:String,
 	startTime:{
 		type:Date
 	},

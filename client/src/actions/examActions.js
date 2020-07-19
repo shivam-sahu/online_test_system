@@ -54,9 +54,10 @@ export const onPre = (details) => {
   };
 };
 export const onSubmit = userResponse=> async dispatch=>{
-  const response = axios.post("/api/user/sendResponse", userResponse)
+  const response =await axios.post("/api/user/sendResponse", userResponse)
   .then(res=>res.data)
   .catch(err=>{throw err;});
+  console.log(response);
   dispatch({
     type:ON_SUBMIT,
     payload:response

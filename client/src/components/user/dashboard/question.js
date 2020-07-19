@@ -35,7 +35,6 @@ class Questions extends React.Component {
 			responseId: selectedResponse
 		}
 		this.props.onOptionsChange(response);
-
 	}
 	onNextClick = async (response) => {
 		const { currentAttempting, responseArray, markedForReview } = this.props;
