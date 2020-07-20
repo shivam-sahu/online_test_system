@@ -1,4 +1,11 @@
-import {GET_EXAM,INPUT_KEYS, ON_NEXT, ON_OPTIONS_CHANGE, ON_PRE, ON_SUBMIT} from '../actions/types';
+import {GET_EXAM,
+	INPUT_KEYS, 
+	ON_NEXT, 
+	ON_OPTIONS_CHANGE, 
+	ON_PRE, 
+	ON_SUBMIT,
+	SET_TIMER
+} from '../actions/types';
 const initialState = {
 	fetchedQuestionSet: [],
 	currentAttempting:0,
@@ -8,7 +15,8 @@ const initialState = {
 	isLastQuestion:false,
 	adminKey:"",
 	examKey:"",
-	score:0
+	score:0,
+	timer:10
 };
 
 const examReducer = (state= initialState, action)=>{
@@ -62,6 +70,10 @@ const examReducer = (state= initialState, action)=>{
 		case(ON_SUBMIT):{
 			const {score} = payload;
 			return {...state, score};
+		}
+		case (SET_TIMER):{
+			const {timer} = payload;
+			return {...state, timer};
 		}
 		default:
 			return state;

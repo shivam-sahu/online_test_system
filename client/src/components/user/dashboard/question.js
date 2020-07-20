@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { onNext, onOptionsChange, onPre, onSubmit } from '../../../actions/examActions';
+import { onNext, onOptionsChange, onPre, onSubmit, setTimer } from '../../../actions/examActions';
 import styles from  './question.module.css';
 import { withRouter } from 'react-router-dom';
 class Questions extends React.Component {
@@ -26,7 +26,7 @@ class Questions extends React.Component {
 		} else {
 			await this.setState({ attempted: true, selectedResponse: optionId });
 		}
-		const { currentAttempting, fetchedQuestionSet } = this.props;
+		const { currentAttempting, fetchedQuestionSet, markedForReview, responseArray } = this.props;
 		const { id: questionId } = fetchedQuestionSet[currentAttempting];
 		const { attempted, selectedResponse } = this.state;
 		const response = {
@@ -73,6 +73,7 @@ class Questions extends React.Component {
 			{
 				fetchedQuestionSet.length === 0 ? null:
 					<div className={styles.questionWrapper}>
+							{/* {this.props.timer === 0 ? () => this.onSubmit({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview }):null} */}
 						<div className={styles.questionContainer}>
 								<div className={styles.questionBlock}>{fetchedQuestionSet[currentAttempting].questionText}
 							</div>

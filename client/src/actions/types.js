@@ -4,6 +4,7 @@ export const ON_NEXT = "ON_NEXT";
 export const ON_OPTIONS_CHANGE = "ON_OPTIONS_CHANGE";
 export const ON_PRE = "ON_PRE";
 export const ON_SUBMIT = "ON_SUBMIT";
+export const SET_TIMER = "SET_TIMER";
 
 // * admin
 export const FETCH_QUESTIONS = "FETCH_QUESTIONS";

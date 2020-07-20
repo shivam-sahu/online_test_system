@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {getExam, inputKeys} from '../../../actions/examActions';
-// import Exam from './exam';
+import {inputKeys} from '../../../actions/examActions';
 const UserDashboard=  (props)=>{
 	const  exam = useSelector(state => state.exam);
 	const {adminKey:oldAdminKey, examKey:oldExamKey} = exam;

@@ -3,7 +3,8 @@ import { GET_EXAM,
   ON_NEXT, 
   ON_OPTIONS_CHANGE, 
   ON_PRE,
-  ON_SUBMIT
+  ON_SUBMIT,
+  SET_TIMER
 } from './types';
 import axios from '../utils/axios';
 
@@ -62,4 +63,13 @@ export const onSubmit = userResponse=> async dispatch=>{
     type:ON_SUBMIT,
     payload:response
   })
+}
+
+export const setTimer = (timerVal)=>{
+  return {
+    type:SET_TIMER,
+    payload:{
+      timer:timerVal
+    }
+  }
 }
