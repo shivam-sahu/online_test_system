@@ -6,7 +6,8 @@ import {onSubmit, setTimer} from '../../../actions/examActions';
 const UserHeader = (props) =>{
 	// const [timeRemaining, setTimeRemaining] = useState(5);
 	const dispatch = useDispatch();
-	const {adminKey, examKey:examName, responseArray, timer} = useSelector(state=>state.exam);
+	const {adminKey, examKey:examName, responseArray} = useSelector(state=>state.exam);
+	const {timer} = useSelector(state=>state.time);
 	const submitFun = async () => {
 		await dispatch(onSubmit({ adminKey, examName, responseArray }));
 		props.history.push('/user/result')

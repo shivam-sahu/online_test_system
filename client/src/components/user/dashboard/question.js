@@ -1,114 +1,88 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { onNext, onOptionsChange, onPre, onSubmit, setTimer } from '../../../actions/examActions';
+import { onNext, onOptionsChange, onPre, onSubmit, onReview } from '../../../actions/examActions';
 import styles from  './question.module.css';
 import { withRouter } from 'react-router-dom';
 class Questions extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			selectedResponse: null,
-			attempted: false,
-			wantReview: false
-		};
 	}
 
-	componentDidMount() {
-		const { currentAttempting, markedForReview } = this.props;
-		this.setState({ wantReview: markedForReview[currentAttempting] });
-	}
-
-	onOptionsClick = async (optionId) => {
-
-		if (this.state.attempted && this.state.selectedResponse === optionId) {
-			await this.setState({ attempted: false, selectedResponse: null });
-		} else {
-			await this.setState({ attempted: true, selectedResponse: optionId });
-		}
-		const { currentAttempting, fetchedQuestionSet, markedForReview, responseArray } = this.props;
+	onOptionsClick = (optionId) => {
+		const { currentAttempting, fetchedQuestionSet, responseArray } = this.props;
 		const { id: questionId } = fetchedQuestionSet[currentAttempting];
-		const { attempted, selectedResponse } = this.state;
+		const { responseId:oldResponseId } = responseArray[currentAttempting];
+		const responseId = oldResponseId === optionId ? null : optionId;
 		const response = {
-			attempted,
+			attempted:true,
 			questionId,
-			responseId: selectedResponse
+			responseId
 		}
 		this.props.onOptionsChange(response);
 	}
-	onNextClick = async (response) => {
-		const { currentAttempting, responseArray, markedForReview } = this.props;
-		const oldResponse = responseArray[currentAttempting];
-		const { attempted, responseId } = oldResponse;
-		await this.setState({ attempted, selectedResponse: responseId, wantReview: markedForReview[currentAttempting] });
-		this.props.onNext(response);
-	}
-	onPreClick = async (response) => {
-		const { currentAttempting, responseArray, markedForReview } = this.props;
-		const oldResponse = responseArray[currentAttempting];
-		const { attempted, responseId } = oldResponse;
-		await this.setState({ attempted, selectedResponse: responseId, wantReview: markedForReview[currentAttempting] });
-		this.props.onPre(response);
-	}
 
-	onReview = () => {
-		this.setState({ wantReview: !this.state.wantReview });
-	}
-	onSubmit =async (response) => {
-		await this.onNextClick(response);
+	onSubmit =async () => {
 		const {adminKey, examKey, responseArray} = this.props;
 		await this.props.onSubmit({adminKey, examName:examKey, responseArray});
 		this.props.history.push('/user/result');
 	}
 
 	render() {
-		const { wantReview, selectedResponse } = this.state;
-		const { currentAttempting, fetchedQuestionSet, isLastQuestion } = this.props;
-		// if(fetchedQuestionSet !== 0){
-
-		// 	const { id: questionId, questionText, options } = fetchedQuestionSet[currentAttempting];
-		// }
+		const { currentAttempting, 
+			fetchedQuestionSet, 
+			isLastQuestion, 
+			responseArray, 
+			onNext,
+			onPre,
+			onReview
+		} = this.props;
+		const { questionText, options } = fetchedQuestionSet[currentAttempting];
+		const {responseId} = responseArray[currentAttempting];
 		return (
 		<div>
 			{
 				fetchedQuestionSet.length === 0 ? null:
 					<div className={styles.questionWrapper}>
-							{/* {this.props.timer === 0 ? () => this.onSubmit({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview }):null} */}
 						<div className={styles.questionContainer}>
-								<div className={styles.questionBlock}>{fetchedQuestionSet[currentAttempting].questionText}
+								<div className={styles.questionBlock}>{questionText}
 							</div>
 							<div className={styles.optionBlock}>
 								{
-										fetchedQuestionSet[currentAttempting].options.map((option, index) => (
-										<div key={index}
-											className={`${styles.option} ${selectedResponse === option.id ? styles.selectedOption : ""}`}
-											onClick={() => this.onOptionsClick(option.id)}>
-											<span className={styles.optionIndex}>{String.fromCharCode(65 + index)}.</span>
-											<span className={styles.optionText}>{option.value}</span>
-										</div>
-									))
+										options.map((option, index) => (
+											<div key = { index }
+												className={`${styles.option} ${responseId === option.id ? styles.selectedOption : ""}`}
+												onClick = {() => this.onOptionsClick(option.id)}>
+												<span className={styles.optionIndex}>{String.fromCharCode(65 + index)}.</span>
+												<span className={styles.optionText}>{option.value}</span>
+											</div>
+										))
 								}
 							</div>
 						</div>
 						<div className='actionBlock'>
-							<button onClick={() => this.onPreClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Previous</button>
-							<button onClick={() => this.onReview()}>Review Later</button>
+							<button onClick={() => onPre()}>Previous</button>
+							<button onClick={() => onReview()}>Review Later</button>
 							{
 								isLastQuestion ? 
-									<button onClick={() => this.onSubmit({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Submit</button>:
-									<button onClick={() => this.onNextClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Next</button>
+									<button onClick={() => this.onSubmit()}>Submit</button>:
+									<button onClick={() => onNext()}>Next</button>
 							}
-							{/* <button onClick={() => this.onNextClick({ questionId: fetchedQuestionSet[currentAttempting].id, wantReview })}>Next</button> */}
 						</div>
 					</div>
 			}
 		</div>
-
 		);
 	}
 }
 const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({ onNext, onOptionsChange, onPre, onSubmit }, dispatch);
+	return bindActionCreators({ 
+		onNext, 
+		onOptionsChange, 
+		onPre, 
+		onReview, 
+		onSubmit 
+	}, dispatch);
 }
 const mapStateToProps = (state) => {
 	const { exam } = state;

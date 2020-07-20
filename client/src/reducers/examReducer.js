@@ -3,8 +3,9 @@ import {GET_EXAM,
 	ON_NEXT, 
 	ON_OPTIONS_CHANGE, 
 	ON_PRE, 
+	ON_REVIEW,
 	ON_SUBMIT,
-	SET_TIMER
+	QUES_NUM_CLK
 } from '../actions/types';
 const initialState = {
 	fetchedQuestionSet: [],
@@ -16,7 +17,7 @@ const initialState = {
 	adminKey:"",
 	examKey:"",
 	score:0,
-	timer:10
+	timer:30
 };
 
 const examReducer = (state= initialState, action)=>{
@@ -43,37 +44,37 @@ const examReducer = (state= initialState, action)=>{
 		}
 		case(ON_OPTIONS_CHANGE):{
 			const {response} = payload;
-			// console.log(response);
 			const { responseArray, currentAttempting} = state;
 			const newResponseArray = [...responseArray.slice(0, currentAttempting) ,response ,...responseArray.slice(currentAttempting+1)];
 			return { ...state, responseArray: newResponseArray};
 		}
 		case(ON_NEXT):{
-			const{wantReview} = payload;
-			const { currentAttempting, fetchedQuestionSet, markedForReview} = state;
-			// console.log(currentAttempting);
+			const { currentAttempting, fetchedQuestionSet} = state;
 			const newIndex = currentAttempting < (fetchedQuestionSet.length - 1) ? currentAttempting+1:currentAttempting;
 			const isLastQuestion =  newIndex === (fetchedQuestionSet.length-1)? true:false;
 			const isFirstQuestion = newIndex === 0 ?true:false;
-			const newReviewArray = [...markedForReview.slice(0, currentAttempting), wantReview, ...markedForReview.slice(currentAttempting+1)];
-			return {...state, currentAttempting:newIndex, markedForReview:newReviewArray, isFirstQuestion, isLastQuestion};
+			return {...state, currentAttempting:newIndex, isFirstQuestion, isLastQuestion};
 		}
 		case(ON_PRE):{
-			const { wantReview } = payload;
-			const { currentAttempting, fetchedQuestionSet, markedForReview } = state;
+			const { currentAttempting, fetchedQuestionSet } = state;
 			const newIndex = currentAttempting >0 ? currentAttempting - 1 : currentAttempting;
 			const isLastQuestion = newIndex === (fetchedQuestionSet.length - 1) ? true : false;
 			const isFirstQuestion = newIndex === 0 ? true : false;
-			const newReviewArray = [...markedForReview.slice(0, currentAttempting), wantReview, ...markedForReview.slice(currentAttempting + 1)];
-			return { ...state, currentAttempting: newIndex, markedForReview: newReviewArray, isFirstQuestion, isLastQuestion };
+			return { ...state, currentAttempting: newIndex, isFirstQuestion, isLastQuestion };
+		}
+		case (ON_REVIEW):{
+			const {currentAttempting, markedForReview:oldReviewArray} = state;
+			const currentValue = !oldReviewArray[currentAttempting];
+			const markedForReview = [...oldReviewArray.slice(0, currentAttempting), currentValue, ...oldReviewArray.slice(currentAttempting+1)];
+			return {...state, markedForReview};
 		}
 		case(ON_SUBMIT):{
 			const {score} = payload;
 			return {...state, score};
 		}
-		case (SET_TIMER):{
-			const {timer} = payload;
-			return {...state, timer};
+		case(QUES_NUM_CLK):{
+			const {questionIndex} = payload;
+			return { ...state, currentAttempting:questionIndex};
 		}
 		default:
 			return state;
