@@ -1,5 +1,7 @@
 import { GET_EXAM, 
-  INPUT_KEYS, 
+  INPUT_KEYS,
+  LOGIN_USER,
+  REGISTER_USER,
   ON_NEXT, 
   ON_OPTIONS_CHANGE, 
   ON_PRE,
@@ -9,7 +11,7 @@ import { GET_EXAM,
   QUES_NUM_CLK
 } from './types';
 import axios from '../utils/axios';
-
+import setAuthToken from '../utils/setAuthToken';
 export const getExam =keys=>async dispatch=>{
   const response = await axios.get('/api/user/getExam',{params: keys})
   .then(res=>res.data)
@@ -26,6 +28,16 @@ export const inputKeys = (keys) =>{
     payload:keys
   };
 };
+
+export const loginUser =obj=> async dispatch=>{
+  const request = await axios.post("/api/user/login", obj)
+    .then(res => res.data)
+    .catch(err=>{console.log(err)});
+  const { token } = request;
+  localStorage.setItem('jwtToken', token);
+  setAuthToken(token);
+}
+
 export const onNext=()=>{
 	return {
     type: ON_NEXT,

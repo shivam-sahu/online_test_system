@@ -1,10 +1,13 @@
 import { DELETE_EXAM, 
 	FETCH_QUESTIONS, 
-	INSERT_QUESTION, 
+	INSERT_QUESTION,
+	LOGIN_ADMIN,
 	POST_EXAM,
 	REMOVE_QUESTION,
+	REGISTER_ADMIN,
 	UPDATE_EXAM} from './types';
 import axios from '../utils/axios';
+import setAuthToken from '../utils/setAuthToken';
 
 export const deleteExam = (examName) =>async dispatch=>{
 	const response = await axios.delete("/api/admin/deleteExam", {params:{examName}})
@@ -36,6 +39,15 @@ export const insertQuestion = (questionsSet)=>{
 		type:INSERT_QUESTION,
 		payload:{questionsSet}
 	});
+}
+
+export const loginAdmin=(obj)=>async dispatch=>{
+	const request = await axios.post("/api/admin/login", obj)
+		.then(res=>res.data)
+		.catch(err=>{console.log(err)});
+	const { token } = request;
+	localStorage.setItem('jwtToken', token);
+	setAuthToken(token);
 }
 
 export const postExam =(exam)=>async dispatch=>{

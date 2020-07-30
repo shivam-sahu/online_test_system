@@ -17,7 +17,7 @@
 	border-left: 1px solid rgba(244, 249, 253, 0.6) ;
 }
 .option{
-	background: rgba(244,249,253,0.6);
+	background: rgba(244, 249, 253, 0.6);
 	margin-bottom:10px;
 	padding:5px;
 	z-index:1;
@@ -29,7 +29,7 @@
 	background: rgb(241, 201, 66);
 }
 .selectedOption{
-	background:rgb(46,164,79);
+	background:rgb(46, 163, 79);
 }
 .option:active{
 	transition: ease-in 0.7ms;
