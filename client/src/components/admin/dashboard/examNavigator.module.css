@@ -1,0 +1,44 @@
+.examNavigator{
+	flex-grow:1.7;
+	flex-basis: 15rem;
+}
+.addExam{
+	display: flex;
+	align-items: center;
+	height: 4.5rem;
+	width: 100%;
+	padding-left: 0.3rem;
+}
+.plusIcon{
+	height: 1.7rem;
+	width: 1.7rem;
+	margin: 0.15rem;
+	cursor: pointer;
+}
+.examsText{
+	font-size: 1.7rem;
+	color:#2D34DF;
+	font-weight: 500;
+	margin: 0.15rem;
+}
+.notSelectedExamNames{
+	font-size: 1.4rem;
+	background: rgba(69,69,71,0.4);
+	height: 2rem;
+	display: flex;
+	cursor: pointer;
+}
+.selectedExamName{
+	font-size: 1.4rem;
+	background: rgba(21,21,53,0.4);
+	font-weight: 500;
+	height: 2rem;
+	display: flex;
+	margin-top: 0.2rem;
+	cursor: pointer;
+}
+
+.bar{
+	height: 100%;
+	margin-right: 0.5rem;
+}

@@ -1,0 +1,7 @@
+.container{
+	display:flex;
+	background: #0A0A1B;
+	color: #fff;
+	height: 100vh;
+	overflow: auto;
+}

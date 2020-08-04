@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+import { insertQuestion, showPopup} from '../../../../actions/adminActions';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import './editQuestion.css';
 import crossIconBlack from '../../../../assets/icons/crossBlack.svg';
+import crossIconWhite from '../../../../assets/icons/crossWhite.svg';
 class EditQuestion extends Component {
   constructor(props) {
     super(props);
@@ -49,30 +53,49 @@ class EditQuestion extends Component {
       this.setState({correctOptionIndex:index});
     }
   }
+  onCancel = ()=>{
+    this.props.showPopup("quesPopup", false);
+  }
+  onDone = async (questionText, options, correctAnsId = null) => {
+    const { props: { questionsSet: oldQuestions } } = this;
+    const questionObject = {
+      id: (oldQuestions.length + 1).toString(),
+      questionText,
+      options,
+      correctAnsId
+    };
+    const newQuestions = [...oldQuestions, questionObject];
+    await this.props.insertQuestion(newQuestions);
+    this.props.showPopup("quesPopup", false);
+    
+  };
   render() {
     const { questionText, showAddOptionsSpace, optionsText, options, correctOptionIndex } = this.state;
     return (
-      <div className="popupBackground" onClick={()=>this.props.onCancel()}>
+      <div className="popupBackground" onClick={()=>this.onCancel()}>
         <img className='crossIconBlack' src={crossIconBlack} alt='cancel' />
         <div className="addQuestionContainer" onClick={(event) => event.stopPropagation()}>
           <div className="addQuestion">
-            <textarea
-              className='textArea'
-              value={questionText}
-              onChange={(e) => this.onQuesTxtChange(e.target.value)}
-            ></textarea>
+          <div className='textAreaWrapper'>
+              <textarea
+                className='textArea'
+                value={questionText}  
+                onChange={(e) => this.onQuesTxtChange(e.target.value)}
+              />
+              <div className='textAreaPlaceholder'>Question</div>
+          </div>
             <div className='addedOptionsContainer'>
               {
                 options.map((option, index) => {
                   return <div key={index} 
-                  className={correctOptionIndex === index? 'highlightOption' :'addedOptions'}
+                  className={correctOptionIndex === index ? 'highlightOption' : 'addedOptions'}
                   onClick={() => { this.onOptionsClick(index) }}
                   >
-                    <span>
-                      <span className='optionIndex'>{String.fromCharCode(65 + index)}.</span>
-                      <span className='optionText'>{option.value}</span>
-                    </span>
-                      <button className='removeButton' onClick={(e) => this.removeOption(e,index)}>Remove</button>
+                      <span>
+                        <span className='optionIndex'>{String.fromCharCode(65 + index)}.</span>
+                        <span className='optionText'>{option.value}</span>
+                      </span>
+                    <img  src={crossIconWhite} alt='remove' className='removeIcon' onClick={(e) => this.removeOption(e, index)}/>
                   </div>
                 })
               }
@@ -98,7 +121,7 @@ class EditQuestion extends Component {
             Add options
         </span>
           <div className='doneButtonContainer'>
-          <button className='doneButton' onClick={() => this.props.onDone(questionText, options, correctOptionIndex)}>Done</button>
+          <button className='doneButton' onClick={() => this.onDone(questionText, options, correctOptionIndex)}>Done</button>
           </div>
         </div>
       </div>
@@ -106,4 +129,13 @@ class EditQuestion extends Component {
   }
 }
 
-export default EditQuestion;
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ insertQuestion, showPopup }, dispatch);
+}
+
+const mapStateToProps = (state) => {
+  const { setExam } = state;
+  return setExam;
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditQuestion);

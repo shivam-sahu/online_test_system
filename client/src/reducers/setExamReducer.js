@@ -7,15 +7,16 @@ const initialState = {
 	owner:null,
 	timeLimit:null,
 	userGivenExam:[],
-	_id:null
+	_id:null,
+	responses:[]
 };
 
 const setExamReducer = (state= initialState, action)=>{
 	const {type, payload} = action;
 	switch(type){
 		case(FETCH_QUESTIONS):{
-			const exam = payload;
-			return {...state,  ...exam};
+			const {exam, responses} = payload;
+			return {...state,  ...exam, responses:[...responses]};
 		}
 		case(INSERT_QUESTION):{
 			const {questionsSet} = payload;
@@ -27,6 +28,7 @@ const setExamReducer = (state= initialState, action)=>{
 		case (REMOVE_QUESTION):{
 			const {index} = payload;
 			const {questionsSet} = state;
+			console.log(index)
 			if(index>-1){
 				questionsSet.splice(index, 1);
 				return {...state, questionsSet:[...questionsSet]};

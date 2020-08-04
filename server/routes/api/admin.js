@@ -6,6 +6,7 @@ const config  = require("../../config/config")
 
 const {Admin} = require('../../models/admin');
 const {Exam} = require('../../models/exam');
+const {Response } = require('../../models/response');
 // * api -> /api/admin/
 //!test
 router.get('/test',(req,res)=>{
@@ -96,7 +97,23 @@ router.post("/postExam", passport.authenticate('jwt', {session:false}), (req, re
 router.get("/getExam", passport.authenticate('jwt', {session:false}), (req, res)=>{
   Exam.findOne({name:req.query.examName, owner:req.user._id})
   .then(exam=>{
-    res.send(exam);
+    const data = exam._doc;
+    const examId = data._id;
+    Response.find({examGiven:examId})
+    .then(responses=>{
+      const response = {exam:{...data}, responses};
+      res.send(response);
+    })
+    .catch(err=>{throw err;});
+    // res.send(exam._doc);
+  })
+  .catch(err=>{throw err;});
+});
+// ? get All exam Names
+router.get("/getExamNames", passport.authenticate('jwt', { session: false }), (req, res)=>{
+  Exam.find({owner:req.user._id}).select('name')
+  .then(exams=>{
+    res.send(exams);
   })
   .catch(err=>{throw err;});
 });

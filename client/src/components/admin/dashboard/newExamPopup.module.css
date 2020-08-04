@@ -1,0 +1,31 @@
+.popupWrapper{
+	margin-top: 7vh;
+	margin-bottom:7vh;
+  background: rgb(18, 18, 18);
+  border-radius: 8px;
+  height: 12rem;
+  position: relative;
+  width: 23.75rem;
+}
+.input{
+	  width: calc(100% - 4rem);
+    height: 2rem;
+    margin: 2rem;
+    background: #181A1B;
+    color: #fff;
+    font-size: 1.3rem;
+    text-indent: 0.3rem;
+}
+.nextBtn{
+	border: 0px;
+  font-size: 20px;
+  color: #fff;
+  background: rgba(46,164,79);
+  border-radius: 5px;
+  height: 35px;
+	width: 75px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left:2rem;
+}

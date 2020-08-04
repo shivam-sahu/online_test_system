@@ -1,6 +1,7 @@
 .question {
 	border-radius: 10px;
-	background: rgba(32, 34, 52, 0.4);
+	font-size:1.2rem;
+	background: rgba(10,10,27);
 	padding:10px;
 	margin:10px;
 	z-index: 2;
@@ -10,19 +11,16 @@
 }
 .options{
 	margin:5px;
-	/* background: rgba(32, 34, 52, 0.6); */
-	/* border-radius: 8px; */
 	padding:3px;
-	/* transition: box-shadow 0.2s ease-in, color 0.3s linear; */
-	font-size: 22px;
 	cursor: pointer;
 	color: #FFFFFF;
+	background: rgb(33 33 44);
+	border-radius: 5px;
+	padding-left: 0.5rem;
 }
-/* .options:hover{
-		color: #4f4f4f;
-    box-shadow: 4px 4px 20px -5px rgba(116,5,252,.4), -4px -4px 20px -5px rgba(255, 255, 255, 1), inset 1px 1px 1px rgba(255, 255, 255, .2), inset -1px -1px 1px rgba(0, 0, 0, .1);
-} */
-
+.optionsCorrect{
+	background:rgb(46,164,79);
+}
 .crossIcon {
 	height: 15px; 
 	width:15px;

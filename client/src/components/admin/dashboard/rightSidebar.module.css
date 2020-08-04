@@ -1,0 +1,110 @@
+.rightSidebar{
+	flex-grow:2.3;
+	display: flex;
+	flex-direction: column;
+	margin-left:8px;
+	flex-basis:19rem;
+}
+.adminInfo{
+	background: #C4C4C4;
+  color: #000000;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+	align-items: center;
+	margin-right: 16px;
+  margin-bottom: 12px;
+}
+.nameLogout{
+	font-weight: 500;
+	font-size: 1.4rem;
+	padding-top:0.5rem;
+}
+.adminName{
+	font-weight: 700;
+	padding: 0.6rem;
+}
+.adminId{
+	font-size: 0.8rem;
+	padding-bottom: 0.8rem;
+}
+.options{
+	border-radius: 10px 0px 0px 10px;
+  background: rgba(21,21,53, 0.4);
+	padding: 1px;
+	flex-grow:1;
+}
+.topBtnWrapper{
+	display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 1rem;
+}
+.addQuesWrapper{
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+	margin-top: 2rem;
+}
+.btnWrapper{
+	border-radius: 0.3rem;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 0.31rem;
+	box-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+	cursor: pointer;
+}
+.saveBtn{
+	width: 4.7rem;
+	background: #2D34DF;
+}
+.btnTxt{
+	font-size:1.2rem;
+}
+.deleteBtn{
+	background: #CB2431;
+}
+.dateTimeContainer{
+	margin:0.5rem;
+}
+.datePicker{
+	background: #C4C4C4;
+	border-radius: 3px;
+	margin-top:0.5rem;
+}
+.timePicker{
+	background: #C4C4C4;
+	border-radius: 3px;
+}
+.plusIcon{
+	height: 1.2rem;
+	width: 1.2rem;
+	margin-left: 0.2rem;
+	margin-right: 0.3rem;
+}
+.addQues{
+	background: #2D34DF;
+}
+.files{
+	margin-top:1rem;
+}
+.dropZone{
+	border:1px dashed;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding:1rem;
+}
+.goliveWrapper{
+	display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.goLiveBtn{
+	background:#2EA44F;
+}

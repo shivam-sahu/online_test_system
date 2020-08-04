@@ -1,0 +1,27 @@
+.setQuestionWrapper{
+  flex-grow:6;
+  background: #0A0A1B;
+  display: flex;
+  flex-direction: column;
+}
+.setQuestionContainer{
+	background: rgba(21,21,53,0.4);
+  z-index: 1;
+  flex-grow: 1;
+  overflow: auto;
+}
+.selectionTab{
+  display: flex;
+  background: rgba(21,21,53,0.4);  
+  font-size:1.5rem;
+  padding-bottom: 1rem;
+  cursor: pointer;
+}
+.tabWrapper{
+  width: 50%;
+  text-align: center;
+}
+.bar{
+  width: 100%;
+  margin-bottom: 5px;
+}

@@ -11,11 +11,15 @@ export const SET_TIMER = "SET_TIMER";
 export const QUES_NUM_CLK = "QUES_NUM_CLK";
 
 // * admin
+export const ADD_EXAM = "ADD_EXAM";
+export const CHANGE_EXAM = "CHANGE_EXAM";
 export const DELETE_EXAM = "DELETE_EXAM";
+export const GET_EXAM_NAMES = "GET_EXAM_NAMES";
 export const FETCH_QUESTIONS = "FETCH_QUESTIONS";
 export const INSERT_QUESTION = "INSERT_QUESTION";
 export const LOGIN_ADMIN = "LOGIN_ADMIN";
 export const REGISTER_ADMIN = "REGISTER_ADMIN";
 export const POST_EXAM = "POST_EXAM";
 export const REMOVE_QUESTION = "REMOVE_QUESTION";
+export const SHOW_POPUP = "SHOW_POPUP";
 export const UPDATE_EXAM = "UPDATE_EXAM";

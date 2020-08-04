@@ -1,7 +1,7 @@
 const { SET_TIMER } = require("../actions/types");
 
 const initialState = {
-	timer: 120
+	timer:36000
 };
 
 const timerReducer = (state=initialState, action)=>{

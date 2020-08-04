@@ -1,27 +1,26 @@
-import React from 'react';
+import React,{useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {removeQuestion} from '../.../../../../actions/adminActions';
 import crossIcon from '../../../assets/icons/crossWhite.svg';
 import crossIconRed from '../../../assets/icons/crossred.svg';
 import './renderPreviousQuestion.css'
-class RenderPreviousQuestion extends React.Component{
-	constructor(props){
-		super(props);
-		this.state={
-			isQuestionCrossHover: false
-		}
-	}
-	render(){
-		const {value, index  } = this.props;
+const  RenderPreviousQuestion=(props) =>{
+		
+		const dispatch = useDispatch();
+
+		const [isQuestionCrossHover, setQuestionCrossHover] = useState(false);
+		const {value, index  } = props;
 		const { options, questionText, id, correctAnsId } = value;
 		return(
 			<div key={index} className='question' >
 				<div className='questionTextWrapper'>
 					<span>{index + 1}. {questionText}</span>
 					<span
-						onMouseEnter={() => this.setState({ isQuestionCrossHover: true })}
-						onMouseLeave={() => this.setState({ isQuestionCrossHover: false })}
-						onClick={() => { this.props.removeQuestion(index) }} >
+						onMouseEnter={() => setQuestionCrossHover( true) }
+						onMouseLeave={() => setQuestionCrossHover(false)}
+						onClick={() => { dispatch(removeQuestion(index)) }} >
 						{
-							this.state.isQuestionCrossHover ?
+							isQuestionCrossHover ?
 								<img className='crossIcon' src={crossIconRed} alt='remove' />
 								:
 								<img className='crossIcon' src={crossIcon} alt='remove' />
@@ -32,7 +31,9 @@ class RenderPreviousQuestion extends React.Component{
 				<div>
 					{options.map((val, idx) => {
 						return (
-							<div key={idx} className='options'>
+							<div key={idx} 
+							className={`options ${parseInt(correctAnsId) === idx ? "optionsCorrect" :""} `}
+							>
 								{String.fromCharCode(65 + idx)}. <label>{val.value}</label> 
 							</div>
 						);
@@ -40,7 +41,6 @@ class RenderPreviousQuestion extends React.Component{
 				</div>
 			</div>
 		)
-	}
 }
 
 export default RenderPreviousQuestion;

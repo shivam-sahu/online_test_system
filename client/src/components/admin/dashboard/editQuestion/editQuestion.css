@@ -5,10 +5,12 @@
   bottom: 0;
   right: 0;
   left: 0;
-	/* background: rgba(244,249,253,0.6); */
 	background: rgba(32,34,52, 0.6);
   backdrop-filter: blur(5px);
-  position: absolute;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	z-index:2;
 }
 .crossIconBlack{
 	height: 25px;
@@ -19,38 +21,53 @@
 }
 .addQuestionContainer{
 	padding: 60px;
-  margin-top: 7vh;
-	/* background: #F4F6FA; */
-	background: rgb(3, 6, 24);
-  border: 1px solid grey;
+	margin-top: 7vh;
+	margin-bottom:7vh;
+  background: #121212;
   border-radius: 8px;
-  margin-left: 7vh;
-  margin-right: 7vw;
-	height: calc(86vh - 120px);
+  height: calc(86vh - 120px);
+  position: relative;
+  width: 45%;
+}
+.textAreaWrapper{
 	position: relative;
+	height:5rem;
+	border-radius: 0.5rem;
+	border:1px solid rgba(255,255,255, 0.5);
+	background: #181A1B;
+	margin-top:25px;
 }
-/* .addQuestion{
-	display: flex;
-	justify-content: space-between;
-} */
 .textArea{
-  border-style: hidden;
-  z-index: 1;
-  border-radius: 8px;
-  height: 100px;
-  width: 100%;
-  font-size: 20px;
-	box-shadow:4px 4px 20px -3px rgba(45, 52, 223, 0.8);
-	border-radius: 8px;
-	background-color: #202234;
-	color:#FFFFFF;
-	margin-bottom: 20px;
+	position: relative;
+	width: 100%;
+	height:calc(100% - 5px);
+	background: transparent;
+	border:0;
+	text-indent: 0.75rem;
+	color:#ffffff;
+	font-size:1rem;
+	padding-top:5px;
 
 }
-.textArea:focus{
-	outline: none;
+.textArea:focus + .textAreaPlaceholder{
+	background: #121212;
+  transform: translate(0.625rem, -18px) scale(0.8);
 }
 
+.textAreaPlaceholder{
+	color: rgba(white, 0.875);
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  padding: 0 0.25rem;
+  font-weight: 400;
+  transform: translate(0.5rem, -20px);
+  transform-origin: 0% 0%;
+  background: transparent;
+  pointer-events: none;
+  transition: transform 0.35s, background 0.35s;
+}
 .addedOptionsContainer{
 	margin-top:8px;
 }
@@ -59,7 +76,7 @@
   padding: 5px;
 	display: flex;
 	justify-content: space-between;
-	background: rgb(10,10,27);
+	background: #181A1B;
 	border-radius: 4px;
 }
 .highlightOption{
@@ -72,7 +89,7 @@
 	
 }
 .optionIndex{
-	margin: 5px;
+	margin: 3px;
 	font-size: 18px;
 	z-index: 1;
 	color:#FFFFFF;
@@ -80,31 +97,20 @@
 .optionText{
 	margin: 5px;
   padding: 5px;
-	font-size: 18px;
+	font-size: 1rem;
 	z-index: 1;
 	color:#FFFFFF;
+	margin-left:0px;
 }
 
-.removeButton{
-	position: relative;
-  border: 0px;
-	height: 100%;
-  background: #CB2431;
-	color: #fff;
-	z-index: 2;
-  font-size: 18px;
-  align-self: center;
-	box-shadow: 1px 1px 4px;
-	
+.removeIcon{
+	height: 18px;
+	width: 18px;
+	align-self: center;
 }
-
-
 
 .optionsInputContainer{
-	/* padding:5px; */
-	/* width: 100%; */
 	display: flex;
-
 }
 .optionsInput{
 	width: 100%;
@@ -116,7 +122,7 @@
 	border-bottom-left-radius: 8px;
 	border-style: hidden;
 	z-index: 1;
-	background-color: #202234;
+	background-color: #181A1B;
 	color:#FFFFFF;
 }
 .optionsInput:focus{
@@ -134,17 +140,14 @@
 	border-bottom-right-radius: 8px;
 	border-style: none;
 	z-index: 2;
-	/* background-color: #2EA44F; */
 	background-color: #2D34DF;
-	/* box-shadow:4px 4px 20px -3px rgba(46,164,79,.8); */
-	box-shadow:4px 4px 20px -3px rgba(45,52,223, 0.8);
 }
 
 .addOptionsText{
 	position: relative;
   color: rgba(45,52,223);
   text-decoration: underline;
-  font-size: 18px;
+  font-size: 1rem;
 	top: 20px;
 	cursor: pointer;
 }
@@ -157,7 +160,6 @@
   border-radius: 5px;
   height: 35px;
   width: 75px;
-  box-shadow: 2px 2px 5px rgba(255,255,255,0.5);
 }
 .doneButtonContainer{
 	position: absolute;
