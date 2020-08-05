@@ -2,9 +2,9 @@ import React,{useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {onSubmit, setTimer} from '../../../actions/examActions';
+import styles from './index.module.css';
 
 const UserHeader = (props) =>{
-	// const [timeRemaining, setTimeRemaining] = useState(5);
 	const dispatch = useDispatch();
 	const {adminKey, examKey:examName, responseArray} = useSelector(state=>state.exam);
 	const {timer} = useSelector(state=>state.time);
@@ -34,8 +34,10 @@ const UserHeader = (props) =>{
 		return ()=> clearInterval(interval);
 	},[timer]);
 
-	return(<div>
-		{ `${days}D : ${hours}H : ${minutes}M : ${seconds}S` }
+	return(<div className={styles.timerHeader}>
+		<div className={timer < 60 ? styles.redTimer :styles.timer}>
+		{ `Time Left: ${hours}h:${minutes}m:${seconds}s` }
+	</div>
 	</div>);
 }
 

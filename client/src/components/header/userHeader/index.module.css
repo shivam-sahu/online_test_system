@@ -1,0 +1,18 @@
+.timerHeader{
+	width: 100vw;
+	height: 3.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: #0A0A1B;
+}
+.timer{
+	font-size: 1.7rem;
+	font-weight: 600;
+	color:#ffff;
+}
+.redTimer{
+	font-size: 1.7rem;
+	font-weight: 600;
+	color:#CB2431;
+}

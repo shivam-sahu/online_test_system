@@ -40,7 +40,7 @@ class Questions extends React.Component {
 		const { questionText, options } = fetchedQuestionSet[currentAttempting];
 		const {responseId} = responseArray[currentAttempting];
 		return (
-		<div>
+		<div style={{flex:'1'}}>
 			{
 				fetchedQuestionSet.length === 0 ? null:
 					<div className={styles.questionWrapper}>
@@ -60,14 +60,17 @@ class Questions extends React.Component {
 								}
 							</div>
 						</div>
-						<div className='actionBlock'>
-							<button onClick={() => onPre()}>Previous</button>
-							<button onClick={() => onReview()}>Review Later</button>
-							{
-								isLastQuestion ? 
-									<button onClick={() => this.onSubmit()}>Submit</button>:
-									<button onClick={() => onNext()}>Next</button>
-							}
+						<div className={styles.actionBlock}>
+							<button className={`${styles.buttons} ${styles.preBtn}`} onClick={() => onPre()}>Previous</button>
+							<div className={styles.nextBtnContainer}>
+							<button className={`${styles.buttons} ${styles.reviewBtn}`} onClick={() => onReview()}>Review</button>
+									{
+										isLastQuestion ?
+											<button className={`${styles.buttons} ${styles.nextBtn}`} onClick={() => this.onSubmit()}>Submit</button> :
+											<button className={`${styles.buttons} ${styles.nextBtn}`} onClick={() => onNext()}>Next</button>
+									}
+							</div>
+							
 						</div>
 					</div>
 			}

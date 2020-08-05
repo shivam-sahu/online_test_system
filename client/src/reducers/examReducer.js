@@ -14,10 +14,9 @@ const initialState = {
 	markedForReview: [],
 	isFirstQuestion:true,
 	isLastQuestion:false,
-	adminKey:"",
-	examKey:"",
-	score:0,
-	timer:30
+	adminKey:"admin",
+	examKey:"exam1",
+	score:0
 };
 
 const examReducer = (state= initialState, action)=>{

@@ -2,6 +2,7 @@ import {
 	CHANGE_EXAM,
 	DELETE_EXAM,
 	GET_EXAM_NAMES,
+	GO_LIVE,
 	FETCH_QUESTIONS, 
 	INSERT_QUESTION,
 	LOGIN_ADMIN,
@@ -9,6 +10,7 @@ import {
 	REMOVE_QUESTION,
 	REGISTER_ADMIN,
 	SHOW_POPUP,
+	UPDATE_DATE,
 	UPDATE_EXAM} from './types';
 import axios from '../utils/axios';
 import setAuthToken from '../utils/setAuthToken';
@@ -39,6 +41,16 @@ export const getExamNames = ()=> async dispatch=>{
 		payload:response
 	});
 };
+
+export const goLive = (data) => async dispatch=>{
+	const response = await axios.put("/api/admin/goLive", data)
+	.then(res=>res.data)
+	.catch(err => {throw err;});
+	dispatch({
+		type:GO_LIVE,
+		payload:response
+	})
+}
 
 export const fetchQuestions = (examName)=>async dispatch=> {
 	await axios.get("/api/admin/getExam",{params:{
@@ -98,6 +110,13 @@ export const showPopup=(detail, value)=>{
 			value
 		}
 	});
+}
+
+export const updateDate = (data) => {
+	return {
+		type:UPDATE_DATE,
+		payload:data
+	}
 }
 
 export const updateExam  = (exam)=> async dispatch=>{

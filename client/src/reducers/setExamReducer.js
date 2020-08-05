@@ -1,4 +1,4 @@
-import { DELETE_EXAM, FETCH_QUESTIONS, INSERT_QUESTION, POST_EXAM, REMOVE_QUESTION, UPDATE_EXAM} from "../actions/types";
+import { DELETE_EXAM, FETCH_QUESTIONS,GO_LIVE, INSERT_QUESTION, POST_EXAM, REMOVE_QUESTION, UPDATE_DATE, UPDATE_EXAM} from "../actions/types";
 const initialState = {
 	questionsSet:[],
 	id:null,
@@ -8,7 +8,8 @@ const initialState = {
 	timeLimit:null,
 	userGivenExam:[],
 	_id:null,
-	responses:[]
+	responses:[],
+	isLive:false
 };
 
 const setExamReducer = (state= initialState, action)=>{
@@ -17,6 +18,10 @@ const setExamReducer = (state= initialState, action)=>{
 		case(FETCH_QUESTIONS):{
 			const {exam, responses} = payload;
 			return {...state,  ...exam, responses:[...responses]};
+		}
+		case(GO_LIVE):{
+			const {live:isLive} = payload;
+			return {...state, isLive};
 		}
 		case(INSERT_QUESTION):{
 			const {questionsSet} = payload;
@@ -33,6 +38,22 @@ const setExamReducer = (state= initialState, action)=>{
 				questionsSet.splice(index, 1);
 				return {...state, questionsSet:[...questionsSet]};
 			}else return {...state};
+		}
+		case (UPDATE_DATE):{
+			const {date, ref} = payload;
+			const end = new Date(state.end);
+			if(ref === 'startDate'){
+				if(date > end){
+					return {...state, start:date, end:date};
+				}
+				else 
+					return{...state, start:date};
+			}
+			else if(ref === 'endDate')
+				return {...state, end:date};
+			else if(ref === 'timeLimit')
+				return {...state, timeLimit:date};
+			return {...state};
 		}
 		case(UPDATE_EXAM):{
 			const {exam} = payload;

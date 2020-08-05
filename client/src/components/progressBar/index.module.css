@@ -2,32 +2,29 @@
 	background: rgb(10, 10, 27);
 	display: flex;
 	justify-content: center;
-	height: 45px;
 	align-items: center;
+	overflow:auto;
 }
 
 .checkpoint{
-	width: 35px;
-  height: 35px;
+	width: 3rem;
+  height: 3rem;
   transform: skew(-25deg, 0deg);
-  color: #fff;
+	color: #fff;
+	font-size:1.2rem;
   font-weight: bolder;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   z-index: 1;
 	backdrop-filter: blur(3px);
-	border: 1px solid;
-	box-shadow: 2px 2px 5px rgba(255,255,255,0.5);
 	cursor: pointer;
 	margin:2px;
+	
 }
 .checkpoint:hover{
-	width: 37px;
-	height: 37px;
-	/* border: 1px solid; */
 	z-index: 2;
-	/* box-shadow: 2px 2px 5px rgba(255,255,255,0.5); */
+	box-shadow: 1px 1px 5px rgba(255, 255, 255);
 }
 
 .blueItem{
@@ -41,5 +38,5 @@
 	background: rgba(241, 201, 66);
 }
 .greyItem{
-	background:rgba(244,249,253, 0.6);
+	background:rgba(69, 69, 71, 0.79);
 }

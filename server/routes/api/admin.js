@@ -148,6 +148,16 @@ router.delete("/deleteExam", passport.authenticate('jwt', { session: false }),as
 
 // ? update
 
+router.put("/goLive", passport.authenticate('jwt', {session:false}), (req,res)=>{
+  const {body:{wantLive, examId}} = req;
+  Exam.findByIdAndUpdate(examId, {live:wantLive}, {upsert:true, new:true})
+  .then(exam=>{
+    if(exam) res.status(200).send(exam);
+    else res.status(400).json({"msg":"action failed"})
+  })
+  .catch(err=>{throw err});
+});
+
 router.put("/updateExam", passport.authenticate('jwt', { session: false }), async (req, res)=>{
   const {body:exam} = req;
   // console.log(req.body);

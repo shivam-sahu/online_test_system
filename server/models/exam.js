@@ -8,6 +8,10 @@ const examSchema  = mongoose.Schema({
 		timeLimit: Date,
 		start: Date,
 		end: Date,
+		live:{
+			type:Boolean,
+			default:false
+		},
 		questionsSet: [
 			{
 				id: String,

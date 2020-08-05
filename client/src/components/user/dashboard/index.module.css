@@ -1,0 +1,75 @@
+.indexPage{
+	background-color: #0A0A1B;
+	color:#fff;
+	height: 100vh;
+}
+.container{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.heading{
+	font-size: 2rem;
+	margin-top: 4rem;
+	margin-bottom: 1.5rem;
+}
+.inputWrapper{
+	position: relative;
+	height:45px;
+	border-radius: 0.5rem;
+	border:2px solid rgba(255,255,255, 0.5);
+	background: #0A0A1B;
+	margin-top:25px;
+}
+.input{
+	position: relative;
+	width: 300px;
+	height:45px;
+	background: transparent;
+	border:0;
+	text-indent: 0.75rem;
+	color:#ffffff;
+	font-size:1.2rem;
+}
+.input:focus + .inputPlaceHolder {
+    background: #0A0A1B;
+    transform: translate(0.625rem, -10px) scale(0.8);
+	}
+.input:not([value=""]) +.inputPlaceHolder{
+	background: #0A0A1B;
+  transform: translate(0.625rem, -10px) scale(0.8);
+}
+.inputPlaceHolder{
+	color: rgba(white, 0.875);
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  padding: 0 0.25rem;
+  font-weight: 400;
+  transform: translate(0.5rem, 15px);
+  transform-origin: 0% 0%;
+  background: transparent;
+  pointer-events: none;
+  transition: transform 0.35s, background 0.35s;
+}
+.inputBtn{
+	background: #2D34DF;
+  color: #fff;
+  height: 2.4rem;
+  width: 5.4rem;
+  border-radius: 0.5rem;
+  font-size: 1.6rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+	align-items: center;
+	margin-top:1rem;
+	cursor: pointer;
+	border: 0px;
+}
+.wave{
+	width:100vw;
+	position: absolute;
+	bottom:0rem;
+}

@@ -5,7 +5,6 @@ import crossIconBlack from '../../../assets/icons/crossBlack.svg';
 import styles from './newExamPopup.module.css';
 const NewExamPopup = ()=>{
 	const dispatch = useDispatch();
-	// const { showNewExamPopup, postExam} = useSelector(state => state.adminSidebar);
 	const [value, setValue] = useState("");
 	const onCancel = ()=>{
 		dispatch(showPopup('examPopup', false));

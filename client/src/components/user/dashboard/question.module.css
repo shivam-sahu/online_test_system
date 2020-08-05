@@ -1,28 +1,35 @@
 .questionWrapper{
 	background: rgb(10, 10, 27);
+	height: 100%;
+	width:100%;
+	overflow: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 .questionContainer{
 	display: flex;
 	color:#fff;
-	border-bottom: 1px solid rgba(244,249,253,0.6);
 }
 .questionBlock{
-	padding:10px;
-	width: calc(60vw - 20px);
-	
+	padding: 1rem;
+  padding-left: 1.5rem;
+  width: calc(60vw - 20px);
+  font-size: 1.5rem;	
 }
 .optionBlock{
-	padding:10px;
-	width: calc(40vw - 21px);
-	border-left: 1px solid rgba(244, 249, 253, 0.6) ;
+	/* padding:10px; */
+	padding: 1rem;
+	width: calc(40vw - 3.75rem);
 }
 .option{
-	background: rgba(244, 249, 253, 0.6);
+	background:rgba(69, 69, 71, 79);
 	margin-bottom:10px;
 	padding:5px;
 	z-index:1;
 	border-radius: 4px;
 	cursor: pointer;
+	flex-wrap: wrap;
 }
 
 .option:not(:active):hover{
@@ -38,10 +45,39 @@
 
 .optionIndex{
 	margin:5px;
-	font-size: 18px;
+	font-size: 1.5rem;
 }
 .optionText{
 	margin:5px;
 	padding:5px;
-	font-size: 18px;
+	font-size: 1.5rem;
 }
+.actionBlock{
+	display: flex;
+  justify-content: space-between;
+}
+.nextBtnContainer{
+	margin-right: 1rem;
+}
+.buttons{
+	background: #2D34DF;
+  color: #fff;
+  border: 0px;
+  border-radius: 5px;
+  height: 2.2rem;
+  padding: 0.3rem;
+  font-size: 1.5rem;
+  margin: 5px;
+  text-align: center;
+  justify-self: center;
+	width: 7rem;
+	margin-bottom: 1rem;
+	cursor: pointer;
+}
+.preBtn{
+	margin-left:1rem;
+}
+.reviewBtn{
+	margin-right:1rem;
+}
+

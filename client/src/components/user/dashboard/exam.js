@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, Fragment} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {getExam} from '../../../actions/examActions';
 import Header from '../../header/userHeader';
@@ -12,16 +12,21 @@ const Exam = () => {
 		dispatch(getExam({ adminKey, examName}));
 	},[]);
 	return (
-		<div>
+		<Fragment>
 			{
 				fetchedQuestionSet.length === 0 ? null :
-					<div>
+					<div style={{
+						display:'flex',
+						flexDirection:'column',
+						height:"100%",
+						width:'100%'
+					}}>
 						<Header />
 						<ProgressBar />
 						<Questions />
 					</div>
 			}
-		</div>
+		</Fragment>
 	)
 }
 

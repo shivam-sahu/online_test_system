@@ -8,7 +8,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
-import { deleteExam, insertQuestion, postExam, removeQuestion, showPopup, updateExam } from "../../../actions/adminActions";
+import { deleteExam, goLive, postExam, showPopup,updateDate, updateExam } from "../../../actions/adminActions";
 
 import styles from './rightSidebar.module.css';
 import plusIcon from '../../../assets/icons/plus.svg'
@@ -17,9 +17,7 @@ import uploadIcon from '../../../assets/icons/upload.svg';
 const RightSidebar = (props)=>{
   const dispatch = useDispatch();
   const { adminSidebar:{examName}, setExam} = useSelector(state => state);
-  const [startDate, handleStartDateChange] = useState(new Date());
-  const [endDate, handleEndDateChange] = useState(new Date());
-  const [selectedDate, handleDateChange] = useState(new Date());
+  const {start:startDate, end:endDate, timeLimit, isLive} = setExam;
   const onSave = () => {
     const { _id, questionsSet,
       id,
@@ -54,6 +52,25 @@ const RightSidebar = (props)=>{
     localStorage.removeItem('jwtToken');
     props.history.push('/')
   }
+  const handleDateChange=(ref, value) =>{
+    const date = value === null ? null :value.toDate();
+    const data = {
+      ref,
+      date
+    }
+    dispatch(updateDate(data));
+  };
+  const handleGoLive = ()=>{
+    const data = {
+      examId:setExam._id,
+      wantLive: isLive ? false:true
+    }
+    if(isLive === true){
+      dispatch(goLive(data));
+    }else{
+      dispatch(goLive(data));
+    }
+  }
 	return (
     <div className={styles.rightSidebar}>
       <div className={styles.adminInfo}>
@@ -82,34 +99,35 @@ const RightSidebar = (props)=>{
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <div className={styles.datePicker}>
               <KeyboardDateTimePicker
+                clearable
                 value={startDate}
-                onChange={handleStartDateChange}
+                onChange={(date)=>handleDateChange('startDate', date)}
+                onError={console.log}
                 label="Start Time"
                 placeholder="04/08/2020 12:00 am"
-                onError={console.log}
-                // minDate={new Date()}
                 format="DD/MM/yyyy hh:mm a"
               />
             </div>
             <div className={styles.datePicker}>
               <KeyboardDateTimePicker
+                clearable
                 value={endDate}
-                onChange={handleEndDateChange}
+                onChange={(date)=>handleDateChange('endDate', date)}
                 label="End Time"
                 placeholder="04/08/2020 12:00 am"
-                onError={console.log}
                 minDate={startDate}
                 format="DD/MM/yyyy hh:mm a"
               />
             </div>
             <div className={styles.datePicker}>
               <KeyboardTimePicker
+                clearable
                 ampm={false}
                 label="Duration"
                 placeholder="01:00"
                 mask="__:__ _M"
-                value={selectedDate}
-                onChange={(date) => handleDateChange(date)}
+                value={timeLimit}
+                onChange={(date) => handleDateChange('timeLimit', date)}
               />
             </div>
           </MuiPickersUtilsProvider>
@@ -144,7 +162,9 @@ const RightSidebar = (props)=>{
         </div>
         <div className={styles.goliveWrapper}>
           <div className={`${styles.goLiveBtn} ${styles.btnWrapper}`}>
-            <div className={styles.btnTxt}>Go live</div>
+            <div onClick={handleGoLive} className={styles.btnTxt}>
+            {isLive ? "On going" : "Go Live"}
+            </div>
           </div>
         </div>
       </div>
